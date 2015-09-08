@@ -21,7 +21,8 @@ class LoginView {
 	 */
 	public function response() {
 		$message = '';
-		
+		$login = new Login($_POST);
+
 		$response = $this->generateLoginFormHTML($message);
 		//$response .= $this->generateLogoutButtonHTML($message);
 		return $response;
