@@ -20,8 +20,7 @@ class LoginView {
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 	public function response() {
-		$message = '';
-		$login = new Login($_POST);
+		$message = new \model\Login($_POST); //Inte skcika post, skcika iställer namn och lösen
 
 		$response = $this->generateLoginFormHTML($message);
 		//$response .= $this->generateLogoutButtonHTML($message);
