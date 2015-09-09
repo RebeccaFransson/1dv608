@@ -9,10 +9,16 @@ class LoginController {
     $this->Login = $l;
 	}
 
+//kollar om användaren vill logga in
   public function TryLogin(){
-    var_dump($this->LoginView);
-    if($this->LoginView){
-      $this->Login->checkLogin($this->LoginView);
+    if($this->LoginView->checkLoginPost()){
+      //hämta inputs
+      $inputs = $this->LoginView->getInputs();
+      //var_dump($inputs);
+      $RespMessage = $this->Login->checkLogin($inputs);
+      //skcika responseMessage till view
+      //var_dump($RespMessage);
+      $this->LoginView->response($RespMessage);
     }
   }
 

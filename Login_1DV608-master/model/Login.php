@@ -13,11 +13,10 @@ class Login {
     }
 
     public function checkLogin($inputs){
-      echo 'kolalr login';
-           if(empty($userName)){
+           if(empty($inputs["username"])){
              return 'Username is missing';
            }
-           if(empty($password)){
+           if(empty($inputs["password"])){
              return 'Password is missing';
            }
     }

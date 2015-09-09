@@ -2,8 +2,11 @@
 
 
 class LayoutView {
-  
+
   public function render($isLoggedIn, LoginView $v, DateTimeView $dtv) {
+//nej då gör jag allt i viewn, det ska vara i controll
+    //$login = new model\Login();
+    //$message = $login->checkLogin($v->getInputs());
     echo '<!DOCTYPE html>
       <html>
         <head>
@@ -13,17 +16,17 @@ class LayoutView {
         <body>
           <h1>Assignment 2</h1>
           ' . $this->renderIsLoggedIn($isLoggedIn) . '
-          
+
           <div class="container">
-              ' . $v->response() . '
-              
+              ' . $v->response($message) . '
+
               ' . $dtv->show() . '
           </div>
          </body>
       </html>
     ';
   }
-  
+
   private function renderIsLoggedIn($isLoggedIn) {
     if ($isLoggedIn) {
       return '<h2>Logged in</h2>';

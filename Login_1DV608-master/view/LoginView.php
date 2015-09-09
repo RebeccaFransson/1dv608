@@ -26,23 +26,34 @@ class LoginView {
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 
+
+
+	 //retunerar tre/false om login
+ 	public function checkLoginPost(){
+ 		if(isset($_POST[self::$name])){
+ 			return true;
+ 		}
+ 		return false;
+ 	}
 	 //kollar om användaren har klickat på knappen,
 	 //skickar namn och lösenord tillbaka
-	public function Login() {
-		if(!empty($_POST)){
+	public function getInputs() {
 			$inputs = array(
-				username => $_POST[self::$name],
-    		password => $_POST[self::$password]);
+				"username" => $_POST[self::$name],
+    		"password" => $_POST[self::$password]);
 			return $inputs;
-		}
 	}
 
 
-	public function response() {
+
+	public function response($RespMessage) {
+		var_dump($RespMessage);
 		$message = '';
-		/**if(!empty($_POST)){
-			$message = $this->loginModel->checkLogin(); //Inte skcika post, skcika iställer namn och lösen
-		}*/
+		if($RespMessage !== ''){
+			$message = $RespMessage;
+		}
+		var_dump($message);
+		//var_dump($message);
 		$response = $this->generateLoginFormHTML($message);
 		//$response .= $this->generateLogoutButtonHTML($message);
 		return $response;
