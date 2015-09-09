@@ -10,11 +10,13 @@ class LoginView {
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
 
-	private $loginModel;
+
 //construktor
-	public function __construct(){
-			$this->loginModel = new \model\Login($_POST[self::$name], $_POST[self::$password]);
+/**public function __construct(){
+	if(!empty($_POST)){
+		$this->loginModel = new \model\Login($_POST[self::$name], $_POST[self::$password]);
 	}
+}*/
 
 	/**
 	 * Create HTTP response
@@ -23,9 +25,24 @@ class LoginView {
 	 *
 	 * @return  void BUT writes to standard output and cookies!
 	 */
-	public function response() {
-		$message = $this->loginModel->checkLogin(); //Inte skcika post, skcika iställer namn och lösen
 
+	 //kollar om användaren har klickat på knappen,
+	 //skickar namn och lösenord tillbaka
+	public function Login() {
+		if(!empty($_POST)){
+			$inputs = array(
+				username => $_POST[self::$name],
+    		password => $_POST[self::$password]);
+			return $inputs;
+		}
+	}
+
+
+	public function response() {
+		$message = '';
+		/**if(!empty($_POST)){
+			$message = $this->loginModel->checkLogin(); //Inte skcika post, skcika iställer namn och lösen
+		}*/
 		$response = $this->generateLoginFormHTML($message);
 		//$response .= $this->generateLogoutButtonHTML($message);
 		return $response;

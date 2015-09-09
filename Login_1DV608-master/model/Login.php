@@ -6,17 +6,18 @@ class Login {
     private $username = 'Admin';
     private $password = 'Password';
 
-    public function __construct($userName, $password){
-        $this->userName = $userName;
-        $this->password = $password;
+    public function __construct(){
+        //$this->userName = $userName;
+        //$this->password = $password;
 
     }
 
-    public function checkLogin(){
-           if(empty($this->userName)){
+    public function checkLogin($inputs){
+      echo 'kolalr login';
+           if(empty($userName)){
              return 'Username is missing';
            }
-           if(empty($this->password)){
+           if(empty($password)){
              return 'Password is missing';
            }
     }
