@@ -14,11 +14,14 @@ class LoginController {
     if($this->LoginView->checkLoginPost()){
       //hämta inputs
       $inputs = $this->LoginView->getInputs();
-      //var_dump($inputs);
-      $RespMessage = $this->Login->checkLogin($inputs);
-      //skcika responseMessage till view
-      //var_dump($RespMessage);
-      $this->LoginView->response($RespMessage);
+
+       if($this->Login->checkLogin($inputs)){//om uppgifterna var korrekta - logga in
+         echo 'gick att logga in';
+       }else{
+         echo "gick inte att logga in";
+         $this->LoginView->response();
+       }
+
     }
   }
 

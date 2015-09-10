@@ -12,11 +12,9 @@ class LoginView {
 
 
 //construktor
-/**public function __construct(){
-	if(!empty($_POST)){
-		$this->loginModel = new \model\Login($_POST[self::$name], $_POST[self::$password]);
-	}
-}*/
+public function __construct($l){
+	$this->Login = $l;
+}
 
 	/**
 	 * Create HTTP response
@@ -46,14 +44,16 @@ class LoginView {
 
 
 
-	public function response($RespMessage) {
-		var_dump($RespMessage);
-		$message = '';
-		if($RespMessage !== ''){
-			$message = $RespMessage;
+	public function response() {
+		if($this->checkLoginPost()){
+			//echo "i response har vi fått en post";
+			$message = $this->Login->getErrorMessage();
+		}else {
+			$message = '';
 		}
-		var_dump($message);
-		//var_dump($message);
+
+		//echo "i response: $message";
+		//hämta ut getErrorMessage
 		$response = $this->generateLoginFormHTML($message);
 		//$response .= $this->generateLogoutButtonHTML($message);
 		return $response;
