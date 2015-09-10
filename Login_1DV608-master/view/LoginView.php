@@ -45,16 +45,19 @@ public function __construct($l){
 
 
 	public function response() {
+		//om vi fått en post, hämta errormeddelanet
 		if($this->checkLoginPost()){
-			//echo "i response har vi fått en post";
 			$message = $this->Login->getErrorMessage();
 		}else {
 			$message = '';
 		}
+		if($this->Login->getSaveUsername()){
+			$savedUsername = $_POST[self::$name];
+		}else {
+			$savedUsername = '';
+		}
 
-		//echo "i response: $message";
-		//hämta ut getErrorMessage
-		$response = $this->generateLoginFormHTML($message);
+		$response = $this->generateLoginFormHTML($message, $savedUsername);
 		//$response .= $this->generateLogoutButtonHTML($message);
 		return $response;
 	}
@@ -78,7 +81,7 @@ public function __construct($l){
 	* @param $message, String output message
 	* @return  void, BUT writes to standard output!
 	*/
-	private function generateLoginFormHTML($message) {
+	private function generateLoginFormHTML($message, $savedUsername) {
 		return '
 			<form method="post" >
 				<fieldset>
@@ -86,7 +89,7 @@ public function __construct($l){
 					<p id="' . self::$messageId . '">' . $message . '</p>
 
 					<label for="' . self::$name . '">Username :</label>
-					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="" />
+					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="' . $savedUsername . '" />
 
 					<label for="' . self::$password . '">Password :</label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
