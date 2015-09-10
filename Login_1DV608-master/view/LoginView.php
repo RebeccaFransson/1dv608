@@ -57,10 +57,16 @@ public function __construct($l){
 			$savedUsername = '';
 		}
 
-		$response = $this->generateLoginFormHTML($message, $savedUsername);
-		//$response .= $this->generateLogoutButtonHTML($message);
+$response = $this->generateLoginFormHTML($message, $savedUsername);
+//inloggad
+		if($this->Login->getIsLoggedIn()){
+			$response = $this->generateLogoutButtonHTML($message);
+		}
+
+
 		return $response;
 	}
+
 
 	/**
 	* Generate HTML code on the output buffer for the logout button
