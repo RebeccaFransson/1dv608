@@ -13,6 +13,7 @@ class Login {
 
     }
 
+    //Kollar om uppgifterna är korrekta
     public function checkLogin($inputs){
       //tomma?
            if(empty($inputs["username"])){
@@ -24,12 +25,11 @@ class Login {
              $this->saveUsername = true;
              return false;
            }
-      //wrong username OR password
+      //fel användarnamn ELLER lösenord
            if($inputs["username"] !== $this->username || $inputs["password"] !== $this->password){
              $this->errorMessage = 'Wrong name or password';
              $this->saveUsername = true;
              return false;
-             //spara username
            }
            $this->isLoggedIn = true;
            return true;

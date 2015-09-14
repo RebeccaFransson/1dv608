@@ -3,10 +3,9 @@
 
 class LayoutView {
 
-  public function render($isLoggedIn, LoginView $v, DateTimeView $dtv) {
-//nej då gör jag allt i viewn, det ska vara i controll
-    //$login = new model\Login();
-    //$message = $login->checkLogin($v->getInputs());
+  public function render(controller\LoginController $c, LoginView $v, DateTimeView $dtv) {
+    //if islogged in, som man hämtar från controllern
+    //var_dump($isLoggedIn);
     echo '<!DOCTYPE html>
       <html>
         <head>
@@ -15,7 +14,7 @@ class LayoutView {
         </head>
         <body>
           <h1>Assignment 2</h1>
-          ' . $this->renderIsLoggedIn($isLoggedIn) . '
+          ' . $this->renderIsLoggedIn($c) . '
 
           <div class="container">
               ' . $v->response() . '
@@ -27,7 +26,8 @@ class LayoutView {
     ';
   }
 
-  private function renderIsLoggedIn($isLoggedIn) {
+  private function renderIsLoggedIn($c) {
+    $isLoggedIn = $c->getIsLoggedIn();
     if ($isLoggedIn) {
       return '<h2>Logged in</h2>';
     }

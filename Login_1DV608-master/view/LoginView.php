@@ -12,8 +12,9 @@ class LoginView {
 
 
 //construktor
-public function __construct($l){
+public function __construct($l, $s){
 	$this->Login = $l;
+	$this->Session = $s;
 }
 
 	/**
@@ -28,7 +29,7 @@ public function __construct($l){
 
 	 //retunerar tre/false om login
  	public function checkLoginPost(){
- 		if(isset($_POST[self::$name])){
+ 		if(isset($_POST[self::$login])){
  			return true;
  		}
  		return false;
@@ -51,16 +52,20 @@ public function __construct($l){
 		}else {
 			$message = '';
 		}
+		//om vi fått en tillbaka att vi ska spara användarnamnet
 		if($this->Login->getSaveUsername()){
 			$savedUsername = $_POST[self::$name];
 		}else {
 			$savedUsername = '';
 		}
-
-$response = $this->generateLoginFormHTML($message, $savedUsername);
-//inloggad
+		//generera ut form
+		$response = $this->generateLoginFormHTML($message, $savedUsername);
+		//Om användaren loggade in, generera ut inlogg
 		if($this->Login->getIsLoggedIn()){
-			$response = $this->generateLogoutButtonHTML($message);
+			$response = $this->generateLogoutButtonHTML('Welcome');
+			//spara session
+			//$inputs = $this->getInputs();
+			//$this->Session->storeSession($inputs);
 		}
 
 
