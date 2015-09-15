@@ -31,6 +31,7 @@ class Login {
              $this->saveUsername = true;
              return false;
            }
+      //gick att logga in
            $this->isLoggedIn = true;
            return true;
     }

@@ -4,38 +4,24 @@ namespace controller;
 
 class LoginController {
 
-  public $isLoggedIn; //private?
-
   public function __construct($l, $v){
     $this->LoginView = $v;
     $this->Login = $l;
-    //$this->isLoggedIn = $isLoggedIn;
 	}
 
 //kollar om användaren vill logga in
   public function tryLogin(){
+    //om vi fått en post...
     if($this->LoginView->checkLoginPost()){
-      //hämta inputs
+      //..hämta inputs sedan...
       $inputs = $this->LoginView->getInputs();
-
-      //om uppgifterna var korrekta - logga in
-       if($this->Login->checkLogin($inputs)){
-         $this->isLoggedIn = true;
-       }else{
-         //Gick inte att logga in, persentera errorMessage
-         $this->LoginView->response();
+      //...prova att logga in
+       if(!$this->Login->checkLogin($inputs)){
+          $this->LoginView->response();//gick ej att logga in, presentera errorMessage
        }
-
     }
   }
 
-
-
-
-
-  public function getIsLoggedIn(){
-    return $this->isLoggedIn;
-  }
 
 
 

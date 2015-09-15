@@ -3,7 +3,7 @@
 
 class LayoutView {
 
-  public function render(controller\LoginController $c, LoginView $v, DateTimeView $dtv) {
+  public function render(model\Login $l, LoginView $v, DateTimeView $dtv) {
     //if islogged in, som man hämtar från controllern
     //var_dump($isLoggedIn);
     echo '<!DOCTYPE html>
@@ -14,7 +14,7 @@ class LayoutView {
         </head>
         <body>
           <h1>Assignment 2</h1>
-          ' . $this->renderIsLoggedIn($c) . '
+          ' . $this->renderIsLoggedIn($l) . '
 
           <div class="container">
               ' . $v->response() . '
@@ -26,8 +26,8 @@ class LayoutView {
     ';
   }
 
-  private function renderIsLoggedIn($c) {
-    $isLoggedIn = $c->getIsLoggedIn();
+  private function renderIsLoggedIn($l) {
+    $isLoggedIn = $l->getIsLoggedIn();
     if ($isLoggedIn) {
       return '<h2>Logged in</h2>';
     }

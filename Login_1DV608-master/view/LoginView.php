@@ -29,7 +29,8 @@ public function __construct($l, $s){
 
 	 //retunerar tre/false om login
  	public function checkLoginPost(){
- 		if(isset($_POST[self::$login])){
+		//var_dump($_POST);
+ 		if(isset($_POST[self::$login])){// eller "count($_POST)>0"
  			return true;
  		}
  		return false;
@@ -63,11 +64,21 @@ public function __construct($l, $s){
 		//Om användaren loggade in, generera ut inlogg
 		if($this->Login->getIsLoggedIn()){
 			$response = $this->generateLogoutButtonHTML('Welcome');
-			//spara session
-			//$inputs = $this->getInputs();
-			//$this->Session->storeSession($inputs);
-		}
 
+			//spara session
+			$inputs = $this->getInputs();
+			if(!isset($_SESSION["username"])){
+				$this->Session->storeSession($inputs);
+			}
+
+			//om användaren loggar ut förstör sessionen
+			if(isset($_POST[self::$logout])){
+				//stänger sessionen ch tar upp LoginForm igen
+				$this->Session->destroySession();
+				$response = $this->generateLoginFormHTML($message, $savedUsername);
+				//ändra "logged in" och "not logged in" finns i controllern
+			}
+		}
 
 		return $response;
 	}

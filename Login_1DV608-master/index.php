@@ -24,7 +24,7 @@ $lv = new LayoutView();
 //controller
 $c = new controller\LoginController($l, $v);
 //kollar om sessioner finns
-$s->IsSessionStored($c);
+$s->IsSessionStored($c, $l);
 
 
-$lv->render($c, $v, $dtv);
+$lv->render($l, $v, $dtv);
