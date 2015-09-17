@@ -10,11 +10,16 @@ class LoginView {
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
 
+	public $loggedOut = false;
 
 //construktor
 public function __construct($l, $s){
 	$this->Login = $l;
 	$this->Session = $s;
+	/*if(isset($_POST[self::$logout])){
+		echo "sätter logout";
+		$this->Login->setIsLoggedIn(true);
+	}*/
 }
 
 	/**
@@ -47,6 +52,7 @@ public function __construct($l, $s){
 
 
 	public function response() {
+
 		//om vi fått en post, hämta errormeddelanet
 		if($this->checkLoginPost()){
 			$message = $this->Login->getErrorMessage();
@@ -59,30 +65,37 @@ public function __construct($l, $s){
 		}else {
 			$savedUsername = '';
 		}
+		//om användaren loggar ut förstör sessionen
+		if(isset($_POST[self::$logout])){
+			$this->Login->setIsLoggedIn(false);
+			$message = $this->Session->destroySession();
+			$response = $this->generateLoginFormHTML($message, $savedUsername);
+			//ändra "logged in" och "not logged in" finns i controllern
+		}
 		//generera ut form
 		$response = $this->generateLoginFormHTML($message, $savedUsername);
+
 		//Om användaren loggade in, generera ut inlogg
 		if($this->Login->getIsLoggedIn()){
-			$response = $this->generateLogoutButtonHTML('Welcome');
-
-			//spara session
-			$inputs = $this->getInputs();
-			if(!isset($_SESSION["username"])){
+			//om session finns skriv ej ut något vid inlogg
+			if($this->Session->IsThereSession()){
+				$response = $this->generateLogoutButtonHTML('');
+			}else{
+				//Session saknas skriv ut välkommen vid inlogg. Spara inputs till sessionen
+				$inputs = $this->getInputs();
 				$this->Session->storeSession($inputs);
+				$response = $this->generateLogoutButtonHTML('Welcome');
 			}
 
-			//om användaren loggar ut förstör sessionen
-			if(isset($_POST[self::$logout])){
-				//stänger sessionen ch tar upp LoginForm igen
-				$this->Session->destroySession();
-				$response = $this->generateLoginFormHTML($message, $savedUsername);
-				//ändra "logged in" och "not logged in" finns i controllern
-			}
+
 		}
 
 		return $response;
 	}
 
+	/*public function getloggedOut(){
+		return $this->loggedOut;
+	}*/
 
 	/**
 	* Generate HTML code on the output buffer for the logout button

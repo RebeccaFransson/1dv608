@@ -7,11 +7,8 @@ class Login {
     private $password = 'Password';
     public $errorMessage = ''; //gör den privat?
     public $saveUsername = false;
-    public $isLoggedIn = false;
+    public $isLoggedInLogin = false;
 
-    public function __construct(){
-
-    }
 
     //Kollar om uppgifterna är korrekta
     public function checkLogin($inputs){
@@ -32,7 +29,7 @@ class Login {
              return false;
            }
       //gick att logga in
-           $this->isLoggedIn = true;
+           $this->isLoggedInLogin = true;
            return true;
     }
 
@@ -42,8 +39,15 @@ class Login {
     public function getSaveUsername(){
       return $this->saveUsername;
     }
-    public function getIsLoggedIn(){
-      return $this->isLoggedIn;
+    public function setIsLoggedIn($bool){
+
+      $this->isLoggedInLogin = $bool;
+      echo "sätter ny utlogg"; var_dump($this->isLoggedInLogin);
     }
+    public function getIsLoggedIn(){
+      return $this->isLoggedInLogin;
+      echo "hämtar utlogg"; var_dump($this->isLoggedInLogin);
+    }
+
 }
 //Här vill vi kolla om lösenord och användarnamn stämmer med dem vi skcikat med. som return returnar vi om det är rätt eller fel!

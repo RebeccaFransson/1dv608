@@ -9,12 +9,13 @@ require_once('model/Session.php');
 require_once('controller/LoginController.php');
 
 //MAKE SURE ERRORS ARE SHOWN... MIGHT WANT TO TURN THIS OFF ON A PUBLIC SERVER
-//error_reporting(E_ALL);
-//ini_set('display_errors', 'On');
+error_reporting(E_ALL);
+ini_set('display_errors', 'On');
 
 //model
 $l = new model\Login();
-$s = new model\Session();
+$s = new model\Session($l);
+
 
 //view
 $v = new LoginView($l, $s);
@@ -22,9 +23,9 @@ $dtv = new DateTimeView();
 $lv = new LayoutView();
 
 //controller
-$c = new controller\LoginController($l, $v);
+$c = new controller\LoginController($l, $v, $s);
 //kollar om sessioner finns
-$s->IsSessionStored($c, $l);
+$c->tryLogin();
 
 
-$lv->render($l, $v, $dtv);
+$lv->render($l, $s, $v, $dtv);
