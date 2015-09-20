@@ -13,8 +13,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 
 //model
-$l = new model\Login();
-$s = new model\Session($l);
+$s = new model\Session();
+$l = new model\Login($s);
 
 
 //view
@@ -28,4 +28,4 @@ $c = new controller\LoginController($l, $v, $s);
 $c->tryLogin();
 
 
-$lv->render($l, $s, $v, $dtv);
+$lv->render($l, $c, $v, $dtv);

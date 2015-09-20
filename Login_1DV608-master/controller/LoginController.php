@@ -4,26 +4,24 @@ namespace controller;
 
 class LoginController {
 
-  public $isLoggedIn = false;
+  private $isLoggedInC = false;
 
   public function __construct($l, $v, $s){
     $this->LoginView = $v;
     $this->Login = $l;
     $this->Session = $s;
 	}
-
+//måste ha isloggedin här för när det finsn session så ska den sättas till true här
 //kollar om användaren vill logga in
   public function tryLogin(){
-    echo "utloggad: ";var_dump($this->Session->getLoggedOut());
+
+    //echo "<br>utloggad: ";var_dump($this->Session->getLoggedOut());
     //finns session - logga in med den
     if($this->Session->IsThereSession()){
-      //session_destroy();
-      //JA - Logga in med session-inputs
-      $sessionInputs = $this->Session->getStoredSession();
-      if($this->Login->checkLogin($sessionInputs)){
-        $this->Login->setIsLoggedIn(true);
-      }
+      echo "<br>Ja sessions finns";
+      $this->isLoggedInC = true;
     }else{
+      echo "<br>Ingen session, kolla om post -> logga in";
       //NEJ kolla om vi får en post...
       if($this->LoginView->checkLoginPost()){
         //..hämta inputs sedan...
@@ -31,13 +29,23 @@ class LoginController {
         //...prova att logga in
          if(!$this->Login->checkLogin($inputs)){
             $this->LoginView->response();//gick ej att logga in, presentera errorMessage
-            //$this->Login->setIsLoggedIn(true);
+            $this->isLoggedInC = false;
          }else{
-           //$this->Login->setIsLoggedIn(true);
+           $this->isLoggedInC = true;
          }
        }
     }
   }
 
+  public function getIsLoggedInC(){
+    echo "<br> vi kommer inte ens hit eller hur?";
+    //om utloggad
+    var_dump($this->LoginView->loggingOut());
+    if($this->LoginView->loggingOut()){
+      echo "<br> ett utlogg har skett";
+      return false;
+    }
+    return $this->isLoggedInC;
+  }
 
 }

@@ -3,7 +3,7 @@
 
 class LayoutView {
 //controller\LoginController
-  public function render($l, $s, LoginView $v, DateTimeView $dtv) {
+  public function render($l, $c, LoginView $v, DateTimeView $dtv) {
     //if islogged in, som man hämtar från controllern
     //var_dump($isLoggedIn);
     echo '<!DOCTYPE html>
@@ -14,7 +14,7 @@ class LayoutView {
         </head>
         <body>
           <h1>Assignment 2</h1>
-          ' . $this->renderIsLoggedIn($l, $s) . '
+          ' . $this->renderIsLoggedIn($l, $c) . '
 
           <div class="container">
               ' . $v->response() . '
@@ -27,21 +27,15 @@ class LayoutView {
   }
 
 
-  private function renderIsLoggedIn($l, $s) {
-    /*$g = $v->getloggedOut();
-    echo "loggat ut? ";
-    var_dump($g);
-    if(!$g){//om användaren loggat ut
-      return '<h2>Not logged in</h2>';
-    }else{//annars hämtar vi*/
-    $isLoggedIn = $l->getIsLoggedIn();
-    echo "hämtar inlogg";var_dump($isLoggedIn);
-    if($s->getLoggedOut()){
-      echo "utloggad";
-      $isLoggedIn = false;
-    }
+  private function renderIsLoggedIn($l, $c) {
+    //kanske kolla om allt är kalr innan man hämtar?
+    /*$isLoggedIn = $l->getIsLoggedIn();
+    echo "i login: ";var_dump($isLoggedIn);*/
+    $isLoggedInC = $c->getIsLoggedInC();
+    echo "<br>i controller: ";var_dump($isLoggedInC);
+    echo "<br>hämtar inlogg ";var_dump($isLoggedInC);
 
-      if ($isLoggedIn) {
+      if ($isLoggedInC) {
         return '<h2>Logged in</h2>';
       }
       else {

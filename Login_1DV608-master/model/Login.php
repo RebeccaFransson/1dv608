@@ -9,25 +9,31 @@ class Login {
     public $saveUsername = false;
     public $isLoggedInLogin = false;
 
-
+    public function __construct($s){
+      $this->Session = $s;
+    }
     //Kollar om uppgifterna är korrekta
     public function checkLogin($inputs){
       //tomma?
-           if(empty($inputs["username"])){
-             $this->errorMessage = 'Username is missing';
-             return false;
-           }
-           if(empty($inputs["password"])){
-             $this->errorMessage = 'Password is missing';
-             $this->saveUsername = true;
-             return false;
-           }
-      //fel användarnamn ELLER lösenord
-           if($inputs["username"] !== $this->username || $inputs["password"] !== $this->password){
-             $this->errorMessage = 'Wrong name or password';
-             $this->saveUsername = true;
-             return false;
-           }
+      //om det finns session sätt till true direkt
+        if($this->Session->IsThereSession()){
+          if(empty($inputs["username"])){
+            $this->errorMessage = 'Username is missing';
+            return false;
+          }
+          if(empty($inputs["password"])){
+            $this->errorMessage = 'Password is missing';
+            $this->saveUsername = true;
+            return false;
+          }
+     //fel användarnamn ELLER lösenord
+          if($inputs["username"] !== $this->username || $inputs["password"] !== $this->password){
+            $this->errorMessage = 'Wrong name or password';
+            $this->saveUsername = true;
+            return false;
+          }
+        }
+
       //gick att logga in
            $this->isLoggedInLogin = true;
            return true;
@@ -40,13 +46,18 @@ class Login {
       return $this->saveUsername;
     }
     public function setIsLoggedIn($bool){
-
       $this->isLoggedInLogin = $bool;
-      echo "sätter ny utlogg"; var_dump($this->isLoggedInLogin);
+      echo "<br>om utloggad sätt false= "; var_dump($this->isLoggedInLogin);
     }
     public function getIsLoggedIn(){
+      //om det är utloggad(hämta från view) sätt till false
+      /*var_dump($this->Session->getLoggedOutSession());
+      if($this->Session->getLoggedOutSession()){
+        echo "<br>ja!! utloggad";
+      }*/
+
       return $this->isLoggedInLogin;
-      echo "hämtar utlogg"; var_dump($this->isLoggedInLogin);
+      echo "<br>hämtar utlogg "; var_dump($this->isLoggedInLogin);
     }
 
 }

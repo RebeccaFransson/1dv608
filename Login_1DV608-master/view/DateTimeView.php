@@ -3,8 +3,9 @@
 class DateTimeView {
 
 	public function show() {
+		//hämta från modell skriv ut här
 		date_default_timezone_set('Europe/Stockholm');
-		
+
 		$day= date("l");
 		$dayNr = date("j");
 		$dayNr .= date("S");
