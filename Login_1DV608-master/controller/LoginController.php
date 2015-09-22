@@ -6,46 +6,27 @@ class LoginController {
 
   private $isLoggedInC = false;
 
-  public function __construct($l, $v, $s){
+  public function __construct($l, $v){
     $this->LoginView = $v;
     $this->Login = $l;
-    $this->Session = $s;
 	}
-//måste ha isloggedin här för när det finsn session så ska den sättas till true här
-//kollar om användaren vill logga in
-  public function tryLogin(){
+  public function runApp(){
 
-    //echo "<br>utloggad: ";var_dump($this->Session->getLoggedOut());
-    //finns session - logga in med den
-    if($this->Session->IsThereSession()){
-      echo "<br>Ja sessions finns";
-      $this->isLoggedInC = true;
-    }else{
-      echo "<br>Ingen session, kolla om post -> logga in";
-      //NEJ kolla om vi får en post...
-      if($this->LoginView->checkLoginPost()){
-        //..hämta inputs sedan...
-        $inputs = $this->LoginView->getInputs();
-        //...prova att logga in
-         if(!$this->Login->checkLogin($inputs)){
-            $this->LoginView->response();//gick ej att logga in, presentera errorMessage
-            $this->isLoggedInC = false;
-         }else{
-           $this->isLoggedInC = true;
-         }
-       }
-    }
-  }
 
-  public function getIsLoggedInC(){
-    echo "<br> vi kommer inte ens hit eller hur?";
-    //om utloggad
-    var_dump($this->LoginView->loggingOut());
-    if($this->LoginView->loggingOut()){
-      echo "<br> ett utlogg har skett";
-      return false;
-    }
-    return $this->isLoggedInC;
+      //om vi fått en post och inte är inloggade
+      if($this->LoginView->checkLoginPost() && !$this->Login->getIsLoggedIn()){
+        //Logga in
+        $this->Login->checkLogin($this->LoginView->getInputs());
+        //sätt meddelande till view
+        $this->LoginView->setErrorMessage($this->Login->getErrorMessage());
+      }
+      //Om vi fått logout-post och är inloggade
+      else if($this->LoginView->checkLogOut() && $this->Login->getIsLoggedIn()){
+        //logga ut
+        $this->Login->loggingOut();
+        //visa meddelande i view
+        $this->LoginView->setErrorMessage($this->Login->getErrorMessage());
+      }
   }
 
 }

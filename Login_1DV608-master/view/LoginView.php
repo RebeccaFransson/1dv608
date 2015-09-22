@@ -11,15 +11,11 @@ class LoginView {
 	private static $messageId = 'LoginView::Message';
 
 	public $loggedOut = false;
+	private $message = '';
 
 //construktor
-public function __construct($l, $s){
+public function __construct($l){
 	$this->Login = $l;
-	$this->Session = $s;
-	/*if(isset($_POST[self::$logout])){
-		echo "sätter logout";
-		$this->Login->setIsLoggedIn(true);
-	}*/
 }
 
 	/**
@@ -30,17 +26,19 @@ public function __construct($l, $s){
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 
-
-
-	 //retunerar tre/false om login
+//fått en post om inlogg?
  	public function checkLoginPost(){
-		//var_dump($_POST);
  		if(isset($_POST[self::$login])){// eller "count($_POST)>0"
  			return true;
  		}
  		return false;
  	}
-	 //kollar om användaren har klickat på knappen,
+//fått en post om utlogg?
+	public function checkLogOut(){
+			if(isset($_POST[self::$logout])){
+				return true;
+			}
+	}
 	 //skickar namn och lösenord tillbaka
 	public function getInputs() {
 			$inputs = array(
@@ -49,56 +47,37 @@ public function __construct($l, $s){
 			return $inputs;
 	}
 
+	//sätt och hämta errormeddelande
+	public function setErrorMessage($getMessage){
+			 $this->message = $getMessage;
+	}
+	public function getErrorMessage(){
+			 return $this->message;
+	}
 
 
 
+//skriver ut html-kod om man loggad in eller om inloggningen misslyckades
 	public function response() {
-echo "<br>response i view";
-		//om vi fått en post, hämta errormeddelanet
-		if($this->checkLoginPost()){
-			$message = $this->Login->getErrorMessage();
-		}else {
-			$message = '';
-		}
-		//om vi fått tillbaka att vi ska spara användarnamnet
-		if($this->Login->getSaveUsername()){
-			$savedUsername = $_POST[self::$name];
-		}else {
-			$savedUsername = '';
-		}
-
-		//generera ut form
-		$response = $this->generateLoginFormHTML($message, $savedUsername);
-
-		//Om användaren loggade in(sessions också), generera ut inlogg
-		if($this->Login->getIsLoggedIn() || $this->Session->IsThereSession()){
-			//om session finns skriv ej ut något vid inlogg
-			if($this->Session->IsThereSession()){
-				$response = $this->generateLogoutButtonHTML('');
-			}else{
-				//Session saknas skriv ut välkommen vid inlogg. Spara en Session
-				$this->Session->storeSession();
-				$response = $this->generateLogoutButtonHTML('Welcome');
+		//kolla om inloggad...
+		if($this->Login->getIsLoggedIn()){
+			//...inloggad!
+			$response = $this->generateLogoutButtonHTML($this->getErrorMessage());
+		}else{
+			//...gick inte att logga in.
+			//om vi fått tillbaka att vi ska spara användarnamnet
+			if($this->Login->getSaveUsername()){
+				$savedUsername = $_POST[self::$name];
+			}else {
+				$savedUsername = '';
 			}
-			//om användaren loggar ut förstör sessionen
-			if(isset($_POST[self::$logout])){
-				echo "<br>loggar ut<br>";
-				$message = $this->Session->destroySession();
-				$this->loggedOut = true;
-				$response = $this->generateLoginFormHTML($message, $savedUsername);
-				//ändra "logged in" och "not logged in" finns i controllern
-			}
-
+			$response = $this->generateLoginFormHTML($this->getErrorMessage(), $savedUsername);
 		}
-
 		return $response;
 	}
 
 
 
-	public function loggingOut(){
-			return $this->loggedOut;
-	}
 
 	/**
 	* Generate HTML code on the output buffer for the logout button

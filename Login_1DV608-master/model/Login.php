@@ -1,22 +1,24 @@
 <?php
 
 namespace model;
-
+session_start();
 class Login {
     private $username = 'Admin';
     private $password = 'Password';
-    public $errorMessage = ''; //gör den privat?
-    public $saveUsername = false;
-    public $isLoggedInLogin = false;
+    private $errorMessage = '';
+    private $saveUsername = false;
+    private $isLoggedInLogin = false;
+    private static $loggedInSession = 'Login::loggedIn';
 
-    public function __construct($s){
-      $this->Session = $s;
+    public function __construct(){
+      //för säkerhetenskull se om det finns en session, om inte sätt den så fall till false
+      if(!isset($_SESSION[self::$loggedInSession])){
+        $_SESSION[self::$loggedInSession] = false;
+      }
     }
     //Kollar om uppgifterna är korrekta
     public function checkLogin($inputs){
-      //tomma?
-      //om det finns session sätt till true direkt
-        if($this->Session->IsThereSession()){
+      //tomma fält
           if(empty($inputs["username"])){
             $this->errorMessage = 'Username is missing';
             return false;
@@ -32,11 +34,10 @@ class Login {
             $this->saveUsername = true;
             return false;
           }
-        }
-
       //gick att logga in
-           $this->isLoggedInLogin = true;
-           return true;
+     $this->errorMessage = 'Welcome';
+     $_SESSION[self::$loggedInSession] = true;
+     return true;
     }
 
     public function getErrorMessage(){
@@ -45,19 +46,24 @@ class Login {
     public function getSaveUsername(){
       return $this->saveUsername;
     }
-    public function setIsLoggedIn($bool){
-      $this->isLoggedInLogin = $bool;
-      echo "<br>om utloggad sätt false= "; var_dump($this->isLoggedInLogin);
+    public function loggingOut(){
+      //loggar ut, sätter sessionen till false och förstör den
+      if(isset($_SESSION[self::$loggedInSession])){
+        if($_SESSION[self::$loggedInSession]){
+          $_SESSION[self::$loggedInSession] = false;
+        }
+        $this->errorMessage = 'Bye bye!';
+        session_destroy();
+      }
     }
     public function getIsLoggedIn(){
-      //om det är utloggad(hämta från view) sätt till false
-      /*var_dump($this->Session->getLoggedOutSession());
-      if($this->Session->getLoggedOutSession()){
-        echo "<br>ja!! utloggad";
-      }*/
-
-      return $this->isLoggedInLogin;
-      echo "<br>hämtar utlogg "; var_dump($this->isLoggedInLogin);
+      //finns det en sparad session?
+      if(isset($_SESSION[self::$loggedInSession])){
+        if($_SESSION[self::$loggedInSession]){
+          return true;
+        }
+        return false;
+      }
     }
 
 }
