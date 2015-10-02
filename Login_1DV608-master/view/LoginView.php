@@ -1,5 +1,4 @@
 <?php
-
 class LoginView {
 	private static $login = 'LoginView::Login';
 	private static $logout = 'LoginView::Logout';
@@ -9,15 +8,12 @@ class LoginView {
 	private static $cookiePassword = 'LoginView::CookiePassword';
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
-
 	public $loggedOut = false;
 	private $message = '';
-
 //construktor
 public function __construct($l){
 	$this->Login = $l;
 }
-
 	/**
 	 * Create HTTP response
 	 *
@@ -25,7 +21,6 @@ public function __construct($l){
 	 *
 	 * @return  void BUT writes to standard output and cookies!
 	 */
-
 //fått en post om inlogg?
  	public function checkLoginPost(){
  		if(isset($_POST[self::$login])){// eller "count($_POST)>0"
@@ -46,7 +41,6 @@ public function __construct($l){
     		"password" => $_POST[self::$password]);
 			return $inputs;
 	}
-
 	//sätt och hämta errormeddelande
 	public function setErrorMessage($getMessage){
 			 $this->message = $getMessage;
@@ -54,9 +48,6 @@ public function __construct($l){
 	public function getErrorMessage(){
 			 return $this->message;
 	}
-
-
-
 //skriver ut html-kod om man loggad in eller om inloggningen misslyckades
 	public function response() {
 		//kolla om inloggad...
@@ -75,10 +66,6 @@ public function __construct($l){
 		}
 		return $response;
 	}
-
-
-
-
 	/**
 	* Generate HTML code on the output buffer for the logout button
 	* @param $message, String output message
@@ -92,7 +79,6 @@ public function __construct($l){
 			</form>
 		';
 	}
-
 	/**
 	* Generate HTML code on the output buffer for the logout button
 	* @param $message, String output message
@@ -104,25 +90,19 @@ public function __construct($l){
 				<fieldset>
 					<legend>Login - enter Username and password</legend>
 					<p id="' . self::$messageId . '">' . $message . '</p>
-
 					<label for="' . self::$name . '">Username :</label>
 					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="' . $savedUsername . '" />
-
 					<label for="' . self::$password . '">Password :</label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
-
 					<label for="' . self::$keep . '">Keep me logged in  :</label>
 					<input type="checkbox" id="' . self::$keep . '" name="' . self::$keep . '" />
-
 					<input type="submit" name="' . self::$login . '" value="login" />
 				</fieldset>
 			</form>
 		';
 	}
-
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	private function getRequestUserName() {
 		//RETURN REQUEST VARIABLE: USERNAME
 	}
-
 }

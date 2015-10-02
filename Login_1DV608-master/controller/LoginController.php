@@ -1,18 +1,12 @@
 <?php
-
 namespace controller;
-
 class LoginController {
-
   private $isLoggedInC = false;
-
   public function __construct($l, $v){
     $this->LoginView = $v;
     $this->Login = $l;
 	}
   public function runApp(){
-
-
       //om vi fått en post och inte är inloggade
       if($this->LoginView->checkLoginPost() && !$this->Login->getIsLoggedIn()){
         //Logga in
@@ -28,5 +22,4 @@ class LoginController {
         $this->LoginView->setErrorMessage($this->Login->getErrorMessage());
       }
   }
-
 }
