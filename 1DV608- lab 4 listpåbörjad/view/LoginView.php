@@ -2,7 +2,7 @@
 
 require_once('model/LoginListener.php');
 
-class LoginView extends LoginListener{
+class LoginView extends \model\LoginListener{
 	private static $login = 'LoginView::Login';
 	private static $logout = 'LoginView::Logout';
 	private static $name = 'LoginView::UserName';
@@ -12,9 +12,11 @@ class LoginView extends LoginListener{
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
 	//public $loggedOut = false;
-	//private $message = '';
+	private $message = '';
 	private $LoginFailed = false;
 	private $LoginSuccess = false;
+	private $UserCredOK = false;
+	private $NotCorrectCredentials = false;
 //construktor
 public function __construct($l){
 	$this->Login = $l;
@@ -38,66 +40,64 @@ public function __construct($l){
 			if(isset($_POST[self::$logout])){
 				return true;
 			}
+			return false;
 	}
 	//är username och password ej tomma?
 	public function checkUsercredentials(){
 			try{
-				return new \model\UserCredentials($_POST[self::$name], $_POST[self::$password]);
+				 $us = new \model\UserCredentials($_POST[self::$name], $_POST[self::$password]);
+				 $this->SetUserCredOK();
+				 return $us;
 			}catch(\model\NameMissingException $e){
-				$this->LoginFailed();
-				return 'Username is missing';
+				$this->SetLoginFailed();
+				$this->message = 'Username is missing';
 			}catch(\model\PasswordMissingException $e){
-				$this->LoginFailed();
-				return 'Username is missing';
+				$this->SetLoginFailed();
+				$this->message = 'Password is missing';
 			}
 	}
 
+	public function SetUserCredOK(){
+    $this->UserCredOK = true;
+  }
+	public function GetUserCredOK(){
+    return $this->UserCredOK;
+  }
 
 	public function SetLoginFailed(){
     $this->LoginFailed = true;
   }
-	public function GetLoginFailed(){
+	/*public function GetLoginFailed(){
     return $this->LoginFailed;
-  }
+  }*/
 
 
   public function SetLoginSuccess(){
     $this->LoginSuccess = true;
+		$this->message = 'Welcome';
+  }
+	public function NotCorrectCredentials(){
+    $this->NotCorrectCredentials = true;
+		$this->message = 'Wrong username or password';
   }
 
-
-
-	 //skickar namn och lösenord tillbaka
-	/*public function getInputs() {
-			$inputs = array(
-				"username" => $_POST[self::$name],
-    		"password" => $_POST[self::$password]);
-			return $inputs;
+	public function setGoodbyeMessage(){
+			 $this->message = "Bye bye!";
 	}
-	//sätt och hämta errormeddelande
-	public function setErrorMessage($getMessage){
-			 $this->message = $getMessage;
-	}
-	public function getErrorMessage(){
-			 return $this->message;
-	}*/
+
 //skriver ut html-kod om man loggad in eller om inloggningen misslyckades
 	public function response() {
-
-		//kolla om inloggad...
-		if($this->LoginSuccess){
-			//...inloggad!
-			$response = $this->generateLogoutButtonHTML('Welcome');
-		}else if($this->LoginFailed){
-			//...gick inte att logga in.
-			//om vi fått tillbaka att vi ska spara användarnamnet
-			/*if($this->Login->getSaveUsername()){
-				$savedUsername = $_POST[self::$name];
-			}else {
-				$savedUsername = '';
-			}*/
+		if($this->Login->getSaveUsername()){
+			$savedUsername = $_POST[self::$name];
+		}else {
 			$savedUsername = '';
-			$response = $this->generateLoginFormHTML($this->checkUsercredentials(), $savedUsername);
+		}
+		//kolla om inloggad...
+		if($this->LoginSuccess || $this->Login->getIsLoggedIn()){
+			//...inloggad!
+			$response = $this->generateLogoutButtonHTML($this->message);
+		}else if($this->LoginFailed){
+			$response = $this->generateLoginFormHTML($this->message, $savedUsername);
 		}else{
 			$response = $this->generateLoginFormHTML('', $savedUsername);
 		}

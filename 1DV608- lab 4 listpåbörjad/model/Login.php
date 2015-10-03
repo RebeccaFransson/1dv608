@@ -1,5 +1,7 @@
 <?php
 namespace model;
+class NotCorrectCredentialsException extends \Exception {};
+class GoodbyeException extends \Exception {};
 session_start();
 class Login {
     private $username = 'Admin';
@@ -16,37 +18,18 @@ class Login {
     }
     //Kollar om uppgifterna är korrekta
     public function checkLogin(Usercredentials $usercredentials, LoginListener $LoginListener){
-      //tomma fält
-          /*if(empty($inputs["username"])){
-            $this->errorMessage = 'Username is missing';
-            return false;
-          }
-          if(empty($inputs["password"])){
-            $this->errorMessage = 'Password is missing';
-            $this->saveUsername = true;
-            return false;
-          }
-     //fel användarnamn ELLER lösenord
-          if($inputs["username"] !== $this->username || $inputs["password"] !== $this->password){
-            $this->errorMessage = 'Wrong name or password';
-            $this->saveUsername = true;
-            return false;
-          }*/
 
+      //ej rätt uppgifter
     		if ($usercredentials->getUsername() !== $this->username || $usercredentials->getPassword() !== $this->password){
-          //throw new NotCorrectCredentialsException();
           $LoginListener->SetLoginFailed();
-        }//finns ej i listan
+          $this->saveUsername = true;
+          throw new NotCorrectCredentialsException();
+        }
 
 
       //gick att logga in
-     //$this->errorMessage = 'Welcome';
      $_SESSION[self::$loggedInSession] = true;
      $LoginListener->SetLoginSuccess();
-     return true;
-    }
-    public function getErrorMessage(){
-      return $this->errorMessage;
     }
     public function getSaveUsername(){
       return $this->saveUsername;
@@ -57,8 +40,8 @@ class Login {
         if($_SESSION[self::$loggedInSession]){
           $_SESSION[self::$loggedInSession] = false;
         }
-        $this->errorMessage = 'Bye bye!';
         session_destroy();
+        throw new GoodbyeException();
       }
     }
     public function getIsLoggedIn(){
