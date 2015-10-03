@@ -9,7 +9,7 @@ class LoginView extends \model\LoginListener{
 	private static $password = 'LoginView::Password';
 	private static $cookieName = 'LoginView::CookieName';
 	private static $cookiePassword = 'LoginView::CookiePassword';
-	private static $keep = 'LoginView::KeepMeLoggedIn';
+	private static $newUser = 'LoginView::RegisterNewUser';
 	private static $messageId = 'LoginView::Message';
 	//public $loggedOut = false;
 	private $message = '';
@@ -42,6 +42,15 @@ public function __construct($l){
 			}
 			return false;
 	}
+
+	public function checkRegisterNew(){
+			if(isset($_POST[self::$newUser])){
+				echo "new user";
+				return true;
+			}
+			return false;
+	}
+
 	//är username och password ej tomma?
 	public function checkUsercredentials(){
 			try{
@@ -63,15 +72,9 @@ public function __construct($l){
 	public function GetUserCredOK(){
     return $this->UserCredOK;
   }
-
 	public function SetLoginFailed(){
     $this->LoginFailed = true;
   }
-	/*public function GetLoginFailed(){
-    return $this->LoginFailed;
-  }*/
-
-
   public function SetLoginSuccess(){
     $this->LoginSuccess = true;
 		$this->message = 'Welcome';
@@ -80,13 +83,13 @@ public function __construct($l){
     $this->NotCorrectCredentials = true;
 		$this->message = 'Wrong username or password';
   }
-
 	public function setGoodbyeMessage(){
 			 $this->message = "Bye bye!";
 	}
 
 //skriver ut html-kod om man loggad in eller om inloggningen misslyckades
 	public function response() {
+		$this->checkRegisterNew();
 		if($this->Login->getSaveUsername()){
 			$savedUsername = $_POST[self::$name];
 		}else {
@@ -131,9 +134,11 @@ public function __construct($l){
 					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="' . $savedUsername . '" />
 					<label for="' . self::$password . '">Password :</label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
-					<label for="' . self::$keep . '">Keep me logged in  :</label>
-					<input type="checkbox" id="' . self::$keep . '" name="' . self::$keep . '" />
 					<input type="submit" name="' . self::$login . '" value="login" />
+					<br>
+					<label for="' . self::$newUser . '">Register new user </label>
+					<input type="submit" name="' . self::$newUser . '" value="New user"/>
+
 				</fieldset>
 			</form>
 		';

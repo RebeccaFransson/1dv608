@@ -29,8 +29,10 @@ class LoginController {
           //visa meddelande i view
           $this->LoginView->setGoodbyeMessage();
         }
+      }
 
-
+      else if($this->LoginView->checkRegisterNew()){
+        echo "new user button";
       }
   }
 }
