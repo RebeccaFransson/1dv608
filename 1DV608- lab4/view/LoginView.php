@@ -1,5 +1,5 @@
 <?php
-
+namespace view;
 require_once('model/LoginListener.php');
 
 class LoginView extends \model\LoginListener{
@@ -18,8 +18,9 @@ class LoginView extends \model\LoginListener{
 	private $UserCredOK = false;
 	private $NotCorrectCredentials = false;
 //construktor
-public function __construct($l){
+public function __construct(\model\Login $l, RegisterView $rv){
 	$this->Login = $l;
+	$this->Register = $rv;
 }
 	/**
 	 * Create HTTP response
@@ -43,13 +44,6 @@ public function __construct($l){
 			return false;
 	}
 
-	public function checkRegisterNew(){
-			if(isset($_POST[self::$newUser])){
-				echo "new user";
-				return true;
-			}
-			return false;
-	}
 
 	//är username och password ej tomma?
 	public function checkUsercredentials(){
@@ -81,7 +75,7 @@ public function __construct($l){
   }
 	public function NotCorrectCredentials(){
     $this->NotCorrectCredentials = true;
-		$this->message = 'Wrong username or password';
+		$this->message = 'Wrong name or password';
   }
 	public function setGoodbyeMessage(){
 			 $this->message = "Bye bye!";
@@ -89,20 +83,15 @@ public function __construct($l){
 
 //skriver ut html-kod om man loggad in eller om inloggningen misslyckades
 	public function response() {
-		$this->checkRegisterNew();
-		if($this->Login->getSaveUsername()){
 			$savedUsername = $_POST[self::$name];
-		}else {
-			$savedUsername = '';
-		}
-		//kolla om inloggad...
+		//kolla om inloggad med "precis inloggad" eller sessions
 		if($this->LoginSuccess || $this->Login->getIsLoggedIn()){
 			//...inloggad!
 			$response = $this->generateLogoutButtonHTML($this->message);
 		}else if($this->LoginFailed){
 			$response = $this->generateLoginFormHTML($this->message, $savedUsername);
 		}else{
-			$response = $this->generateLoginFormHTML('', $savedUsername);
+			$response = $this->generateLoginFormHTML($this->message, $savedUsername);
 		}
 		return $response;
 	}
@@ -135,16 +124,8 @@ public function __construct($l){
 					<label for="' . self::$password . '">Password :</label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
 					<input type="submit" name="' . self::$login . '" value="login" />
-					<br>
-					<label for="' . self::$newUser . '">Register new user </label>
-					<input type="submit" name="' . self::$newUser . '" value="New user"/>
-
 				</fieldset>
 			</form>
 		';
-	}
-	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
-	private function getRequestUserName() {
-		//RETURN REQUEST VARIABLE: USERNAME
 	}
 }

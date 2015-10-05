@@ -30,9 +30,5 @@ class LoginController {
           $this->LoginView->setGoodbyeMessage();
         }
       }
-
-      else if($this->LoginView->checkRegisterNew()){
-        echo "new user button";
-      }
   }
 }

@@ -3,21 +3,25 @@
 require_once('view/LoginView.php');
 require_once('view/DateTimeView.php');
 require_once('view/LayoutView.php');
+require_once('view/RegisterView.php');
 require_once('model/Login.php');
 require_once('model/UserCredentials.php');
 require_once('controller/LoginController.php');
+require_once('controller/RegisterController.php');
 //MAKE SURE ERRORS ARE SHOWN... MIGHT WANT TO TURN THIS OFF ON A PUBLIC SERVER
-error_reporting(E_ALL);
-ini_set('display_errors', 'On');
+//error_reporting(E_ALL);
+//ini_set('display_errors', 'On');
 
 //model
 $l = new model\Login();
 //view
-$dtv = new DateTimeView();
-$lv = new LayoutView();
-$v = new LoginView($l);
+$dtv = new view\DateTimeView();
+$rv = new view\RegisterView();
+$v = new view\LoginView($l, $rv);
+$lv = new view\LayoutView($l, $v, $dtv, $rv);
 //controller
-$c = new controller\LoginController($l, $v);
+$lc = new controller\LoginController($l, $v);
+$rc = new controller\RegisterController($rv);
 //sätter igång applikationen
-$c->runApp();
-$lv->render($l, $v, $dtv);
+$lc->runApp();
+$lv->render($rc);

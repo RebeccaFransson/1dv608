@@ -21,8 +21,8 @@ class Login {
 
       //ej rätt uppgifter
     		if ($usercredentials->getUsername() !== $this->username || $usercredentials->getPassword() !== $this->password){
-          $LoginListener->SetLoginFailed();
           $this->saveUsername = true;
+          $LoginListener->SetLoginFailed();
           throw new NotCorrectCredentialsException();
         }
 
