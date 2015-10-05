@@ -1,6 +1,6 @@
 <?php
 namespace view;
-class RegisterView{
+class RegisterView extends \model\RegisterListener{
 
   private static $registerurl = '?register';
   private static $register = 'register';
