@@ -3,12 +3,23 @@
 namespace controller;
 class RegisterController {
 
-  public function __construct($rv){
-    $this->RegiserView = $rv;
+  public function __construct($rv, $r){
+    $this->RegisterView = $rv;
+    $this->Registration = $r;
 	}
 
-  public function getRegisterLink(){
-    //kolla om man ska skcika register new eller back to start
+  public function startRegistration(){
+    if($this->RegisterView->checkDoRegistration() && !$this->RegisterView->GetRegistrationFailed()){
+      $rc = $this->RegisterView->checkRegistrationCredentials();
+      if($this->RegisterView->GetRegistrationCredOK()){
+        try{
+          $this->Registration->checkRegistration($rc, $this->RegisterView);
+        }catch(\model\DifferentPasswordsException $e){
+          $this->RegisterView->DifferentPasswords();
+        }
+
+      }
+    }
   }
 //till min abstracta klass kalla på model och skcika med view
 }

@@ -42,7 +42,7 @@ class LayoutView {
   private function renderForm(){
     $wantsToRegister = $this->RegisterView->checkRegisterNew();
     if($wantsToRegister){
-      return $this->RegisterView->generateRegistration();
+      return $this->RegisterView->generateRegistrationHTML();
     }
     return $this->LoginView->response();
   }

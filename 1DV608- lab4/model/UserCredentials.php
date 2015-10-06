@@ -4,7 +4,6 @@ class NameMissingException extends \Exception {};
 class PasswordMissingException extends \Exception {};
 
 class UserCredentials {
-  //här ska v sedan hämta listan från databasen typ
 	private $username;
 	private $password;
 

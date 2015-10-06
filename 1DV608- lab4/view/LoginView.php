@@ -1,6 +1,7 @@
 <?php
 namespace view;
 require_once('model/LoginListener.php');
+require_once('model/UserCredentials.php');
 
 class LoginView extends \model\LoginListener{
 	private static $login = 'LoginView::Login';
@@ -18,9 +19,8 @@ class LoginView extends \model\LoginListener{
 	private $UserCredOK = false;
 	private $NotCorrectCredentials = false;
 //construktor
-public function __construct(\model\Login $l, RegisterView $rv){
+public function __construct(\model\Login $l){
 	$this->Login = $l;
-	$this->Register = $rv;
 }
 	/**
 	 * Create HTTP response
