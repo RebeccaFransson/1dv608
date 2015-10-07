@@ -27,11 +27,11 @@ $lv = new view\LayoutView($l, $v, $dtv, $rv);//vill egentligen itne att vyn ska 
 $lc = new controller\LoginController($l, $v);
 $rc = new controller\RegisterController($rv, $r);
 //sätter igång applikationen
-if($rv->checkRegisterNew()){
-  $rc->startRegistration();
-}else{
+$rc->startRegistration();
+
+
   $lc->runApp();
-}
+
 
 //sätter igång vyn
 $lv->render();

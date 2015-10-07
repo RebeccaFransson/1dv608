@@ -1,9 +1,8 @@
 <?php
 namespace view;
-require_once('model/RegisterListener.php');
 require_once('model/RegistrationCredentials.php');
 
-class RegisterView extends \model\RegisterListener{
+class RegisterView{
 
   private static $registerurl = '?register';
   private static $inUrl = 'register';
@@ -16,6 +15,7 @@ class RegisterView extends \model\RegisterListener{
   private $messageOut = '';
   private $registrationFailed = false;
   private $registrationCredOK = false;
+  private $savedusername = '';
 
   public function renderLink(){
     //om vi ahr klickat skcila tillbaka back to start
@@ -32,37 +32,40 @@ class RegisterView extends \model\RegisterListener{
 			return isset($_POST[self::$register]);
 	}
 
-  public function SetRegistrationFailed(){
-    $this->registrationFailed = true;
-  }
-  public function SetRegistrationSuccess(){
-
-  }
-  public function GetRegistrationFailed(){
-    return $this->registrationFailed;
-  }
   public function GetRegistrationCredOK(){
     return $this->registrationCredOK;
   }
 
+
   public function checkRegistrationCredentials(){
+  $this->savedusername = $_POST[self::$username];
     try{
       $rc = new \model\RegistrationCredentials($_POST[self::$username], $_POST[self::$password], $_POST[self::$passwordRepeat]);
       $this->registrationCredOK = true;
       return $rc;
     }catch(\model\RegisterNameMissingException $e){
-        $this->SetRegistrationFailed();
+        $this->registrationFailed = true;
         $this->messageOut = 'Username has too few characters, at least 3 characters.';
     }catch(\model\RegisterPasswordMissingException $e){
-        $this->SetRegistrationFailed();
+        $this->registrationFailed = true;
         $this->messageOut = 'Password has too few characters, at least 6 characters.';
     }catch(\model\RegisterUsernameAndPasswordMissingException $e){
-      $this->SetRegistrationFailed();
+      $this->registrationFailed = true;
       $this->messageOut = 'Username has too few characters, at least 3 characters.<br>Password has too few characters, at least 6 characters.';
+    }catch(\model\ContainsInvalidCharException $e){
+      $this->registrationFailed = true;
+      $this->messageOut = 'Username contains invalid characters.';
+      $this->savedusername = strip_tags($_POST[self::$username]);
+    }
   }
-  }
+  //messaenges
   public function DifferentPasswords(){
+    $this->registrationFailed = true;
     $this->messageOut = 'Passwords do not match.';
+  }
+  public function ExistingUser(){
+    $this->registrationFailed = true;
+    $this->messageOut = 'User exists, pick another username.';
   }
 
 
@@ -76,7 +79,7 @@ class RegisterView extends \model\RegisterListener{
           <legend>Register a new user - Write username and password</legend>
           <p id="'. self::$Message .'">'. $this->messageOut .'</p>
 					<label for="'. self::$username .'" >Username :</label>
-					<input type="text" size="20" name='. self::$username .' id='. self::$username .' value="' . $_POST[self::$username] . '" />
+					<input type="text" size="20" name='. self::$username .' id='. self::$username .' value="' . $this->savedusername . '" />
 					<br/>
 					<label for="'. self::$password .'" >Password  :</label>
 					<input type="password" size="20" name="'. self::$password .'" id="'. self::$password .'" value="" />

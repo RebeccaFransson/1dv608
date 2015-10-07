@@ -9,7 +9,7 @@ class Registration{
     //conncet to db
   }
 
-  public function checkRegistration(RegistrationCredentials $regiCred, RegisterListener $registerListener){
+  public function checkRegistration(RegistrationCredentials $regiCred){
     //kolla om vi kan registrera ny
     /*if($regiCred->getPassword() != $regiCred->getRepeatPassword()){
       throw new DifferentPasswordsException();
@@ -18,11 +18,10 @@ class Registration{
     $this->db->connetToDB();
 
     $this->db->existingUser($regiCred->getUsername());
-    echo "lägg till användaren";
-    $this->db->addUser();
+    $this->db->addUser($regiCred->getUsername(), $regiCred->getPassword());
 
-
-
+    //ny användare skapades korrekt
+    return true;
   }
 
 }

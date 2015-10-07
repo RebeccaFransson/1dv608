@@ -3,6 +3,7 @@ namespace model;
 class RegisterNameMissingException extends \Exception {};
 class RegisterPasswordMissingException extends \Exception {};
 class RegisterUsernameAndPasswordMissingException extends \Exception {};
+class ContainsInvalidCharException extends \Exception {};
 
 class RegistrationCredentials {
   //här ska v sedan hämta listan från databasen typ
@@ -17,6 +18,8 @@ class RegistrationCredentials {
 			throw new RegisterNameMissingException();
 		if (strlen($passwordInput) < 6)
 			throw new RegisterPasswordMissingException();
+		if(strlen($usernameInput) != strlen(strip_tags($usernameInput)))
+			throw new ContainsInvalidCharException();
 
 		$this->username = $usernameInput;
 		$this->password = $passwordInput;

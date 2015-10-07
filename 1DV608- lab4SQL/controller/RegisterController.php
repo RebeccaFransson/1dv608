@@ -9,17 +9,19 @@ class RegisterController {
 	}
 
   public function startRegistration(){
-    if($this->RegisterView->checkDoRegistration() && !$this->RegisterView->GetRegistrationFailed()){
+
+    if($this->RegisterView->checkDoRegistration()){
       $rc = $this->RegisterView->checkRegistrationCredentials();
       if($this->RegisterView->GetRegistrationCredOK()){
         try{
-          $this->Registration->checkRegistration($rc, $this->RegisterView);
+          if($this->Registration->checkRegistration($rc)){
+            //om allt lyckades rediert till login igen
+          }
         }catch(\model\DifferentPasswordsException $e){
           $this->RegisterView->DifferentPasswords();
         }catch(\model\ExistingUserException $e){
-            echo "användarnamn finns redan";
+            $this->RegisterView->ExistingUser();
           }
-
       }
     }
   }

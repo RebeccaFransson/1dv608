@@ -85,7 +85,7 @@ public function __construct(\model\Login $l){
 	public function response() {
 			$savedUsername = $_POST[self::$name];
 		//kolla om inloggad med "precis inloggad" eller sessions
-		if($this->LoginSuccess || $this->Login->getIsLoggedIn()){
+		if($this->Login->getIsLoggedIn()){
 			//...inloggad!
 			$response = $this->generateLogoutButtonHTML($this->message);
 		}else if($this->LoginFailed){
