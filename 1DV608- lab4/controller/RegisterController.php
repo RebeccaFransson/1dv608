@@ -1,13 +1,11 @@
 <?php
 
 namespace controller;
-require_once('model/Registration.php');
-
 class RegisterController {
 
-  public function __construct($rv){
+  public function __construct($rv, $r){
     $this->RegisterView = $rv;
-    $this->Registration = new \model\Registration();
+    $this->Registration = $r;
 	}
 
   public function startRegistration(){
@@ -18,7 +16,9 @@ class RegisterController {
           $this->Registration->checkRegistration($rc, $this->RegisterView);
         }catch(\model\DifferentPasswordsException $e){
           $this->RegisterView->DifferentPasswords();
-        }
+        }catch(\model\ExistingUserException $e){
+            echo "användarnamn finns redan";
+          }
 
       }
     }

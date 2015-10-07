@@ -2,8 +2,8 @@
 namespace view;
 class LayoutView {
 
-  public function __construct( LoginView $v, DateTimeView $dtv, RegisterView $rv){
-    //$this->Login = $l;
+  public function __construct(\model\Login $l, LoginView $v, DateTimeView $dtv, RegisterView $rv){
+    $this->Login = $l;
     $this->LoginView = $v;
     $this->DateTimeView = $dtv;
     $this->RegisterView = $rv;
@@ -31,7 +31,7 @@ class LayoutView {
   }
   private function renderIsLoggedIn() {
     //inloggade?
-    $isLoggedIn = $this->LoginView->GetLoginSuccess();
+    $isLoggedIn = $this->Login->getIsLoggedIn();
       if ($isLoggedIn) {
         return '<h2>Logged in</h2>';
       }
