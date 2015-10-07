@@ -18,9 +18,12 @@ class LoginView extends \model\LoginListener{
 	private $LoginSuccess = false;
 	private $UserCredOK = false;
 	private $NotCorrectCredentials = false;
+	private static $loggedInSession = 'Login::loggedIn';
 //construktor
-public function __construct(\model\Login $l){
-	$this->Login = $l;
+public function __construct(){
+	if(!isset($_SESSION[self::$loggedInSession])){
+		$_SESSION[self::$loggedInSession] = false;
+	}
 }
 	/**
 	 * Create HTTP response
@@ -30,12 +33,12 @@ public function __construct(\model\Login $l){
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 //fått en post om inlogg?
- 	public function checkLoginPost(){
+ 	/*public function checkLoginPost(){
  		if(isset($_POST[self::$login])){// eller "count($_POST)>0"
  			return true;
  		}
  		return false;
- 	}
+ 	}*/
 //fått en post om utlogg?
 	public function checkLogOut(){
 			if(isset($_POST[self::$logout])){
@@ -70,22 +73,37 @@ public function __construct(\model\Login $l){
     $this->LoginFailed = true;
   }
   public function SetLoginSuccess(){
+		$_SESSION[self::$loggedInSession] = true;
     $this->LoginSuccess = true;
 		$this->message = 'Welcome';
+  }
+	public function GetLoginSuccess(){
+		if(isset($_SESSION[self::$loggedInSession])){
+			if($_SESSION[self::$loggedInSession]){
+				return $this->SetLoginSuccess();
+			}
+		}
+		return $this->LoginSuccess;
   }
 	public function NotCorrectCredentials(){
     $this->NotCorrectCredentials = true;
 		$this->message = 'Wrong name or password';
   }
 	public function setGoodbyeMessage(){
-			 $this->message = "Bye bye!";
+		if(isset($_SESSION[self::$loggedInSession])){
+			if($_SESSION[self::$loggedInSession]){
+				$_SESSION[self::$loggedInSession] = false;
+			}
+			session_destroy();
+		}
+		$this->message = "Bye bye!";
 	}
 
 //skriver ut html-kod om man loggad in eller om inloggningen misslyckades
 	public function response() {
 			$savedUsername = $_POST[self::$name];
 		//kolla om inloggad med "precis inloggad" eller sessions
-		if($this->LoginSuccess || $this->Login->getIsLoggedIn()){
+		if($this->LoginSuccess ){//|| $this->Login->getIsLoggedIn()
 			//...inloggad!
 			$response = $this->generateLogoutButtonHTML($this->message);
 		}else if($this->LoginFailed){

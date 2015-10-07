@@ -1,11 +1,13 @@
 <?php
 
 namespace controller;
+require_once('model/Registration.php');
+
 class RegisterController {
 
-  public function __construct($rv, $r){
+  public function __construct($rv){
     $this->RegisterView = $rv;
-    $this->Registration = $r;
+    $this->Registration = new \model\Registration();
 	}
 
   public function startRegistration(){
