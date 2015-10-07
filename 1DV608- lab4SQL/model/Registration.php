@@ -11,14 +11,14 @@ class Registration{
 
   public function checkRegistration(RegistrationCredentials $regiCred){
     //kolla om vi kan registrera ny
-    /*if($regiCred->getPassword() != $regiCred->getRepeatPassword()){
+    if($regiCred->getPassword() != $regiCred->getRepeatPassword()){
       throw new DifferentPasswordsException();
-    }*/
+    }
     //skapar connection när jag beöver den
     $this->db->connetToDB();
 
     $this->db->existingUser($regiCred->getUsername());
-    $this->db->addUser($regiCred->getUsername(), $regiCred->getPassword());
+    //$this->db->addUser($regiCred->getUsername(), $regiCred->getPassword());
 
     //ny användare skapades korrekt
     return true;

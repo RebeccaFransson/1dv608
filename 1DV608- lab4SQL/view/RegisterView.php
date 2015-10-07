@@ -58,7 +58,9 @@ class RegisterView{
       $this->savedusername = strip_tags($_POST[self::$username]);
     }
   }
-  //messaenges
+
+
+  //messages
   public function DifferentPasswords(){
     $this->registrationFailed = true;
     $this->messageOut = 'Passwords do not match.';
@@ -67,7 +69,6 @@ class RegisterView{
     $this->registrationFailed = true;
     $this->messageOut = 'User exists, pick another username.';
   }
-
 
 
 //HTML

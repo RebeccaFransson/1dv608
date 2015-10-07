@@ -25,15 +25,19 @@ class UsersDAL{
     if ($this->conn->connect_error) {
         die("Connection failed: " . $this->conn->connect_error);
     }
-    //det all users to new user(array with users from get all usters)
-    echo "connected!";
-
   }
   public function existingUser($username){
     //sql som lägger till en user i listan
     //return true om den finns
-    $getexist = $this->conn->prepare("SELECT EXISTS(SELECT 1 FROM ". self::$table ."WHERE username = " . $username);
-    if($getexist === 1){
+    $getexist = "SELECT EXISTS
+      (SELECT 1
+        FROM `". self::$table ."`
+        WHERE username = ". $username ."`)";
+
+    $result = mysql_query($getexist);
+    var_dump($result);
+    var_dump(mysqli_fetch_assoc($result));
+    if ($getexist === FALSE) {//fått tillbaka en användare med det användarnamnet
       throw new ExistingUserException();
     }
   }
