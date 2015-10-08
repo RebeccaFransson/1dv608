@@ -16,6 +16,7 @@ class RegisterController {
         try{
           if($this->Registration->checkRegistration($rc)){
             //om allt lyckades rediert till login igen
+            
           }
         }catch(\model\DifferentPasswordsException $e){
           $this->RegisterView->DifferentPasswords();

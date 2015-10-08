@@ -80,6 +80,9 @@ public function __construct(\model\Login $l){
 	public function setGoodbyeMessage(){
 			 $this->message = "Bye bye!";
 	}
+	public function setNewUserMessage(){
+			 $this->message = "Registered new user";
+	}
 
 //skriver ut html-kod om man loggad in eller om inloggningen misslyckades
 	public function response() {

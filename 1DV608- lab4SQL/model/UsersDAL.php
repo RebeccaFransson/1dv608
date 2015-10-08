@@ -2,6 +2,7 @@
 
 namespace model;
 class ExistingUserException extends \Exception {};
+class NotCorrectCredentialsException extends \Exception {};
 class UsersDAL{
 
   private static $table = "Users";
@@ -26,24 +27,22 @@ class UsersDAL{
         die("Connection failed: " . $this->conn->connect_error);
     }
   }
+  public function disconnetToDB(){
+    mysql_close($this->conn);
+  }
   public function existingUser($username){
     //sql som lägger till en user i listan
     //return true om den finns
-    $getexist = "SELECT EXISTS
-      (SELECT 1
-        FROM `". self::$table ."`
-        WHERE username = ". $username ."`)";
-
-    $result = mysql_query($getexist);
-    var_dump($result);
-    var_dump(mysqli_fetch_assoc($result));
-    if ($getexist === FALSE) {//fått tillbaka en användare med det användarnamnet
+    $getexist = "SELECT 1 FROM ". self::$table ." WHERE username='$username' LIMIT 1";
+    $query = mysqli_query($this->conn, $getexist);
+    $result = mysqli_fetch_row($query);
+    if ($result[0] >= 1) {//fått tillbaka en användare med det användarnamnet
       throw new ExistingUserException();
     }
   }
 
   public function addUser($username, $password){
-    $password = password_hash($password, PASSWORD_DEFAULT);
+    $password = sha1($password."häst");
     $add = $this->conn->prepare("INSERT INTO  `". self::$table ."`(
 			`". self::$usernameColom ."` , `". self::$passwordColom ."`)
 				VALUES (?, ?)");
@@ -54,8 +53,15 @@ class UsersDAL{
 		$add->execute();
   }
   //finns det en användare med detta lösneordet?
-
-
+  public function loginSpecificUser($username, $password){
+    $password = sha1($password."häst");
+    $login = "SELECT * FROM  `". self::$table ."` WHERE BINARY username = '$username' AND password =  '$password'";
+    $query = mysqli_query($this->conn, $login);
+    $result = mysqli_fetch_row($query);
+    if ($result === NULL) {
+      throw new NotCorrectCredentialsException();
+    }
+  }
 
 }
 

@@ -1,6 +1,5 @@
 <?php
 namespace model;
-class NotCorrectCredentialsException extends \Exception {};
 class GoodbyeException extends \Exception {};
 session_start();
 class Login {
@@ -10,7 +9,9 @@ class Login {
     private $saveUsername = false;
     private $isLoggedInLogin = false;
     private static $loggedInSession = 'Login::loggedIn';
-    public function __construct(){
+
+    public function __construct($db){
+      $this->db = $db;
       //för säkerhetenskull se om det finns en session, om inte sätt den så fall till false
       if(!isset($_SESSION[self::$loggedInSession])){
         $_SESSION[self::$loggedInSession] = false;
@@ -19,12 +20,9 @@ class Login {
     //Kollar om uppgifterna är korrekta
     public function checkLogin(Usercredentials $usercredentials, LoginListener $LoginListener){
 
-      //ej rätt uppgifter
-    		if ($usercredentials->getUsername() !== $this->username || $usercredentials->getPassword() !== $this->password){
-          $this->saveUsername = true;
-          $LoginListener->SetLoginFailed();
-          throw new NotCorrectCredentialsException();
-        }
+      //connect till databasen när jag behöver den.
+    	$this->db->connetToDB();
+      $this->db->loginSpecificUser($usercredentials->getUsername(), $usercredentials->getPassword());
 
 
       //gick att logga in

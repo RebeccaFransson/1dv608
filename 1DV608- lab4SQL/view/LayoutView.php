@@ -1,12 +1,27 @@
 <?php
 namespace view;
 class LayoutView {
+  private static $registerUrl = 'register';
+  private static $LoginrUrl = '';
+  private static $LoginrUrl2 = '?';
 
   public function __construct(\model\Login $l, LoginView $v, DateTimeView $dtv, RegisterView $rv){
     $this->Login = $l;
     $this->LoginView = $v;
     $this->DateTimeView = $dtv;
     $this->RegisterView = $rv;
+	}
+
+
+	public function checkURL(){
+    var_dump($_GET);
+    if($_GET[self::$registerUrl]){
+      return 'register';
+    }else if($_GET[self::$LoginrUrl] || $_GET[self::$LoginrUrl2]){
+      return 'login';
+    }else{
+      return $_GET;
+    }
 	}
 
   public function render() {

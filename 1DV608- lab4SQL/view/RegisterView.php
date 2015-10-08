@@ -15,6 +15,7 @@ class RegisterView{
   private $messageOut = '';
   private $registrationFailed = false;
   private $registrationCredOK = false;
+  private $RegisterNewUser = false;
   private $savedusername = '';
 
   public function renderLink(){
@@ -35,6 +36,7 @@ class RegisterView{
   public function GetRegistrationCredOK(){
     return $this->registrationCredOK;
   }
+  
 
 
   public function checkRegistrationCredentials(){
