@@ -18,8 +18,6 @@ class Registration{
     //om inger error kastas vid existing user, så kommer användaren läggas till.
     $this->db->existingUser($regiCred->getUsername());
     $this->db->addUser($regiCred->getUsername(), $regiCred->getPassword());
-    //disconnect when done
-    $this->db->disconnetToDB();
     //ny användare skapades korrekt
     return true;
   }

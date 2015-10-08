@@ -11,18 +11,13 @@ class LayoutView {
     $this->RegisterView = $rv;
 	}
 
-
 	public function checkURL(){
-    var_dump($_GET);
     if(isset($_GET[self::$registerUrl])){
       return 'register';
-    /*}else if(isset($_GET[self::$newUserUrl])){
-      return 'newuser';*/
     }else{
       return 'login';
     }
 	}
-
   public function render($form) {
     echo '<!DOCTYPE html>
       <html>

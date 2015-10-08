@@ -28,7 +28,6 @@ class MasterController{
 
 
     $navigation = $lv->checkURL();
-    var_dump($navigation);
      if($navigation === 'register'){
        $r = new \model\Registration($db);
        $rc = new RegisterController($rv, $r);

@@ -29,20 +29,12 @@ public function __construct(\model\Login $l){
 
 //fått en post om inlogg?
  	public function checkLoginPost(){
- 		if(isset($_POST[self::$login])){// eller "count($_POST)>0"
- 			return true;
- 		}
- 		return false;
+ 		return isset($_POST[self::$login]);
  	}
 //fått en post om utlogg?
 	public function checkLogOut(){
-			if(isset($_POST[self::$logout])){
-				return true;
-			}
-			return false;
+			return isset($_POST[self::$logout]);
 	}
-
-
 	//är username och password ej tomma?
 	public function checkUsercredentials(){
 			try{
@@ -78,41 +70,21 @@ public function __construct(\model\Login $l){
 	public function setGoodbyeMessage(){
 			 $this->message = "Bye bye!";
 	}
-	public function IsSession(){
-			 if(isset($_SESSION[self::$usernameSession])){
-				 return true;
-			 }
-			 return false;
-	}
 	public function setSessionName(){
 		$this->savedUsername = $_SESSION[self::$usernameSession];
-	 	$this->message = '';
+	 	$this->message = 'Registered new user.';
 	}
-
-	/*public function setNewUserURL(){
-			 if($this->urlnewusersetted){
-				 $this->urlnewusersetted = false;
-			 }
-			 $this->urlnewusersetted = true;
-	}
-	public function getNewUserURL(){
-		return $this->urlnewusersetted = true;
-	}
-	public function getNewUserURLUsername(){
-			 $this->message = "Registered new user";
-			 $this->savedUsername = $_GET[self::$urlnewuser];
-	}*/
 
 //skriver ut html-kod om man loggad in eller om inloggningen misslyckades
 	public function response() {
-
 		//kolla om inloggad med "precis inloggad" eller sessions
+		$this->savedUsername = $_POST[self::$name];
 		if($this->Login->getIsLoggedIn()){
 			//...inloggad!
-			$this->savedUsername = $_POST[self::$name];
+
 			$response = $this->generateLogoutButtonHTML($this->message);
 			unset($_SESSION[self::$usernameSession]);
-		}else if($this->IsSession()){
+		}else if($_SESSION[self::$usernameSession]){
 			$this->setSessionName();
 			$response = $this->generateLoginFormHTML($this->message, $this->savedUsername);
 		}else{
