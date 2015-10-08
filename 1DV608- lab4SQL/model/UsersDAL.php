@@ -15,10 +15,6 @@ class UsersDAL{
   private $conn;
   private $UsersDB = array();
 
-  /*public function __construct(){
-
-
-  }*/
   // Create connection
   public function connetToDB(){
     $this->conn = new \mysqli(self::$servername, self::$usernameDB, self::$passwordDB, self::$nameDB);
@@ -26,9 +22,6 @@ class UsersDAL{
     if ($this->conn->connect_error) {
         die("Connection failed: " . $this->conn->connect_error);
     }
-  }
-  public function disconnetToDB(){
-    mysql_close($this->conn);
   }
   public function existingUser($username){
     //sql som lägger till en user i listan

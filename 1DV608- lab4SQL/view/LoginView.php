@@ -13,6 +13,7 @@ class LoginView extends \model\LoginListener{
 	private static $newUser = 'LoginView::RegisterNewUser';
 	private static $messageId = 'LoginView::Message';
 	private static $urlnewuser = 'newuser';
+	private static $usernameSession = 'Login::username';
 	//public $loggedOut = false;
 	private $message = '';
 	private $savedUsername = '';
@@ -77,7 +78,18 @@ public function __construct(\model\Login $l){
 	public function setGoodbyeMessage(){
 			 $this->message = "Bye bye!";
 	}
-	public function setNewUserURL(){
+	public function IsSession(){
+			 if(isset($_SESSION[self::$usernameSession])){
+				 return true;
+			 }
+			 return false;
+	}
+	public function setSessionName(){
+		$this->savedUsername = $_SESSION[self::$usernameSession];
+	 	$this->message = '';
+	}
+
+	/*public function setNewUserURL(){
 			 if($this->urlnewusersetted){
 				 $this->urlnewusersetted = false;
 			 }
@@ -89,21 +101,20 @@ public function __construct(\model\Login $l){
 	public function getNewUserURLUsername(){
 			 $this->message = "Registered new user";
 			 $this->savedUsername = $_GET[self::$urlnewuser];
-	}
+	}*/
 
 //skriver ut html-kod om man loggad in eller om inloggningen misslyckades
 	public function response() {
 
-			var_dump($this->getNewUserURL());
 		//kolla om inloggad med "precis inloggad" eller sessions
 		if($this->Login->getIsLoggedIn()){
 			//...inloggad!
 			$this->savedUsername = $_POST[self::$name];
 			$response = $this->generateLogoutButtonHTML($this->message);
-		}else if($this->urlnewusersetted){
-			$this->getNewUserURLUsername();
+			unset($_SESSION[self::$usernameSession]);
+		}else if($this->IsSession()){
+			$this->setSessionName();
 			$response = $this->generateLoginFormHTML($this->message, $this->savedUsername);
-			$this->setNewUserURL();
 		}else{
 			$response = $this->generateLoginFormHTML($this->message, $this->savedUsername);
 		}
