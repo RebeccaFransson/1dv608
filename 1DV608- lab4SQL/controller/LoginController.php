@@ -6,7 +6,7 @@ class LoginController {
     $this->LoginView = $v;
     $this->Login = $l;
 	}
-  public function runApp(){
+  public function startLogin(){
       //om vi fått en post och inte är inloggade och credentials INTE är false
       // && $this->LoginView->GetUserCredOK()
       if($this->LoginView->checkLoginPost() && !$this->Login->getIsLoggedIn()){

@@ -2,8 +2,7 @@
 namespace view;
 class LayoutView {
   private static $registerUrl = 'register';
-  private static $LoginrUrl = '';
-  private static $LoginrUrl2 = '?';
+  private static $newUserUrl = 'newuser=';
 
   public function __construct(\model\Login $l, LoginView $v, DateTimeView $dtv, RegisterView $rv){
     $this->Login = $l;
@@ -15,16 +14,16 @@ class LayoutView {
 
 	public function checkURL(){
     var_dump($_GET);
-    if($_GET[self::$registerUrl]){
+    if(isset($_GET[self::$registerUrl])){
       return 'register';
-    }else if($_GET[self::$LoginrUrl] || $_GET[self::$LoginrUrl2]){
-      return 'login';
+    /*}else if(isset($_GET[self::$newUserUrl])){
+      return 'newuser';*/
     }else{
-      return $_GET;
+      return 'login';
     }
 	}
 
-  public function render() {
+  public function render($form) {
     echo '<!DOCTYPE html>
       <html>
         <head>
@@ -37,7 +36,7 @@ class LayoutView {
 
           ' . $this->renderIsLoggedIn() . '
           <div class="container">
-              ' . $this->renderForm() . '
+              ' . $this->renderForm($form) . '
               ' . $this->DateTimeView->show() . '
           </div>
          </body>
@@ -54,11 +53,14 @@ class LayoutView {
         return '<h2>Not logged in</h2>';
       }
   }
-  private function renderForm(){
-    $wantsToRegister = $this->RegisterView->checkRegisterNew();
-    if($wantsToRegister){
+  private function renderForm($form){
+    //false = register
+    //true = login
+    if(!$form){
       return $this->RegisterView->generateRegistrationHTML();
+    }else if($form){
+      return $this->LoginView->response();
     }
-    return $this->LoginView->response();
+
   }
 }

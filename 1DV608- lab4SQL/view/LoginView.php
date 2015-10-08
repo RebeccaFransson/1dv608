@@ -12,23 +12,20 @@ class LoginView extends \model\LoginListener{
 	private static $cookiePassword = 'LoginView::CookiePassword';
 	private static $newUser = 'LoginView::RegisterNewUser';
 	private static $messageId = 'LoginView::Message';
+	private static $urlnewuser = 'newuser';
 	//public $loggedOut = false;
 	private $message = '';
+	private $savedUsername = '';
 	private $LoginFailed = false;
 	private $LoginSuccess = false;
 	private $UserCredOK = false;
 	private $NotCorrectCredentials = false;
+	private $urlnewusersetted = false;
 //construktor
 public function __construct(\model\Login $l){
 	$this->Login = $l;
 }
-	/**
-	 * Create HTTP response
-	 *
-	 * Should be called after a login attempt has been determined
-	 *
-	 * @return  void BUT writes to standard output and cookies!
-	 */
+
 //fått en post om inlogg?
  	public function checkLoginPost(){
  		if(isset($_POST[self::$login])){// eller "count($_POST)>0"
@@ -80,21 +77,35 @@ public function __construct(\model\Login $l){
 	public function setGoodbyeMessage(){
 			 $this->message = "Bye bye!";
 	}
-	public function setNewUserMessage(){
+	public function setNewUserURL(){
+			 if($this->urlnewusersetted){
+				 $this->urlnewusersetted = false;
+			 }
+			 $this->urlnewusersetted = true;
+	}
+	public function getNewUserURL(){
+		return $this->urlnewusersetted = true;
+	}
+	public function getNewUserURLUsername(){
 			 $this->message = "Registered new user";
+			 $this->savedUsername = $_GET[self::$urlnewuser];
 	}
 
 //skriver ut html-kod om man loggad in eller om inloggningen misslyckades
 	public function response() {
-			$savedUsername = $_POST[self::$name];
+
+			var_dump($this->getNewUserURL());
 		//kolla om inloggad med "precis inloggad" eller sessions
 		if($this->Login->getIsLoggedIn()){
 			//...inloggad!
+			$this->savedUsername = $_POST[self::$name];
 			$response = $this->generateLogoutButtonHTML($this->message);
-		}else if($this->LoginFailed){
-			$response = $this->generateLoginFormHTML($this->message, $savedUsername);
+		}else if($this->urlnewusersetted){
+			$this->getNewUserURLUsername();
+			$response = $this->generateLoginFormHTML($this->message, $this->savedUsername);
+			$this->setNewUserURL();
 		}else{
-			$response = $this->generateLoginFormHTML($this->message, $savedUsername);
+			$response = $this->generateLoginFormHTML($this->message, $this->savedUsername);
 		}
 		return $response;
 	}

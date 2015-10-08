@@ -3,14 +3,12 @@ namespace view;
 require_once('model/RegistrationCredentials.php');
 
 class RegisterView{
-
-  private static $registerurl = '?register';
-  private static $inUrl = 'register';
   private static $Message = 'RegisterView::Message';
   private static $username = 'RegisterView::UserName';
 	private static $password = 'RegisterView::Password';
   private static $passwordRepeat = 'RegisterView::PasswordRepeat';
   private static $register = 'RegisterView::Register';
+  private static $registerurl = '?register';
 
   private $messageOut = '';
   private $registrationFailed = false;
@@ -20,15 +18,12 @@ class RegisterView{
 
   public function renderLink(){
     //om vi ahr klickat skcila tillbaka back to start
-    if($this->checkRegisterNew()){
+    if(isset($_GET['register']) == true){
       return '<a href="?">Back to login</a>';
     }
     return '<a href='. self::$registerurl .'>Register a new user</a>';
   }
 
-	public function checkRegisterNew(){
-			return isset($_GET[self::$inUrl]);
-	}
   public function checkDoRegistration(){
 			return isset($_POST[self::$register]);
 	}
@@ -36,7 +31,7 @@ class RegisterView{
   public function GetRegistrationCredOK(){
     return $this->registrationCredOK;
   }
-  
+
 
 
   public function checkRegistrationCredentials(){
