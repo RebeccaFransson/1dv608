@@ -23,8 +23,8 @@ class LoginView extends \model\LoginListener{
 	private $NotCorrectCredentials = false;
 	private $urlnewusersetted = false;
 //construktor
-public function __construct(\model\Login $l){
-	$this->Login = $l;
+public function __construct($IsLoggedIn){
+	$this->IsLoggedIn = $IsLoggedIn;
 }
 
 //fått en post om inlogg?
@@ -56,19 +56,21 @@ public function __construct(\model\Login $l){
 	public function GetUserCredOK(){
     return $this->UserCredOK;
   }
-	public function SetLoginFailed(){
-    $this->LoginFailed = true;
-  }
   public function SetLoginSuccess(){
-    $this->LoginSuccess = true;
+    $this->IsLoggedIn = true;
 		$this->message = 'Welcome';
   }
+	public function SetLoginFailed(){
+    $this->IsLoggedIn = false;
+  }
 	public function NotCorrectCredentials(){
+		$this->IsLoggedIn = false;
     $this->NotCorrectCredentials = true;
 		$this->message = 'Wrong name or password';
   }
 	public function setGoodbyeMessage(){
-			 $this->message = "Bye bye!";
+		$this->IsLoggedIn = false;
+		$this->message = "Bye bye!";
 	}
 	public function setSessionName(){
 		$this->savedUsername = $_SESSION[self::$usernameSession];
@@ -76,18 +78,18 @@ public function __construct(\model\Login $l){
 	}
 
 //skriver ut html-kod om man loggad in eller om inloggningen misslyckades
-	public function response() {
-		//kolla om inloggad med "precis inloggad" eller sessions
-		$this->savedUsername = $_POST[self::$name];
-		if($this->Login->getIsLoggedIn()){
-			//...inloggad!
-
+	public function LoginResponse() {
+		//inloggad
+		if($this->IsLoggedIn){
 			$response = $this->generateLogoutButtonHTML($this->message);
 			unset($_SESSION[self::$usernameSession]);
+		//skapat ny användare
 		}else if($_SESSION[self::$usernameSession]){
 			$this->setSessionName();
 			$response = $this->generateLoginFormHTML($this->message, $this->savedUsername);
+		//utloggad
 		}else{
+			$this->savedUsername = $_POST[self::$name];
 			$response = $this->generateLoginFormHTML($this->message, $this->savedUsername);
 		}
 		return $response;

@@ -8,7 +8,7 @@ class RegisterView{
 	private static $password = 'RegisterView::Password';
   private static $passwordRepeat = 'RegisterView::PasswordRepeat';
   private static $register = 'RegisterView::Register';
-  private static $registerurl = '?register';
+  private static $registerurl = 'register';
 
   private $messageOut = '';
   private $registrationFailed = false;
@@ -16,13 +16,6 @@ class RegisterView{
   private $RegisterNewUser = false;
   private $savedusername = '';
 
-  public function renderLink(){
-    //om vi ahr klickat skcila tillbaka back to start
-    if(isset($_GET['register']) == true){
-      return '<a href="?">Back to login</a>';
-    }
-    return '<a href='. self::$registerurl .'>Register a new user</a>';
-  }
 
   public function checkDoRegistration(){
 			return isset($_POST[self::$register]);
@@ -32,7 +25,13 @@ class RegisterView{
     return $this->registrationCredOK;
   }
 
-
+  public function checkURL(){
+    if(isset($_GET[self::$registerurl])){
+      return 'register';
+    }else{
+      return 'login';
+    }
+	}
 
   public function checkRegistrationCredentials(){
   $this->savedusername = $_POST[self::$username];

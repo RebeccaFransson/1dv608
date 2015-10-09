@@ -3,21 +3,26 @@ namespace view;
 class LayoutView {
   private static $registerUrl = 'register';
   private static $newUserUrl = 'newuser=';
+  private static $registerurl = '?register';
 
-  public function __construct(\model\Login $l, LoginView $v, DateTimeView $dtv, RegisterView $rv){
-    $this->Login = $l;
-    $this->LoginView = $v;
+  public function __construct($isLoggedIn, $LoginResponse, DateTimeView $dtv, $RegisterHTML){
+    $this->isLoggedIn = $isLoggedIn;
+    $this->LoginResponse = $LoginResponse;
     $this->DateTimeView = $dtv;
-    $this->RegisterView = $rv;
+    $this->RegisterHTML = $RegisterHTML;
 	}
 
-	public function checkURL(){
-    if(isset($_GET[self::$registerUrl])){
-      return 'register';
-    }else{
-      return 'login';
+  public function renderLink(){
+    //om vi ahr klickat skcila tillbaka back to start
+    if($this->isLoggedIn){
+      return '';
     }
-	}
+    if(isset($_GET['register']) == true){
+      return '<a href="?">Back to login</a>';
+    }
+    return '<a href='. self::$registerurl .'>Register a new user</a>';
+  }
+
   public function render($form) {
     echo '<!DOCTYPE html>
       <html>
@@ -27,7 +32,7 @@ class LayoutView {
         </head>
         <body>
           <h1>Assignment 2</h1>
-          ' . $this->RegisterView->renderLink() . '
+          ' . $this->renderLink() . '
 
           ' . $this->renderIsLoggedIn() . '
           <div class="container">
@@ -39,9 +44,7 @@ class LayoutView {
     ';
   }
   private function renderIsLoggedIn() {
-    //inloggade?
-    $isLoggedIn = $this->Login->getIsLoggedIn();
-      if ($isLoggedIn) {
+      if ($this->isLoggedIn) {
         return '<h2>Logged in</h2>';
       }
       else {
@@ -49,12 +52,11 @@ class LayoutView {
       }
   }
   private function renderForm($form){
-    //false = register
-    //true = login
+    //false = register || true = login
     if(!$form){
-      return $this->RegisterView->generateRegistrationHTML();
+      return $this->RegisterHTML;
     }else if($form){
-      return $this->LoginView->response();
+      return $this->LoginResponse;
     }
 
   }

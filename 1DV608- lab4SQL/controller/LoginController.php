@@ -22,11 +22,10 @@ class LoginController {
       }
       //Om vi fått logout-post och är inloggade
       else if($this->LoginView->checkLogOut() && $this->Login->getIsLoggedIn()){
-        //logga ut
         try{
           $this->Login->loggingOut();
+          $this->LoginView->SetLoginFailed();
         }catch(\model\GoodbyeException $e){
-          //visa meddelande i view
           $this->LoginView->setGoodbyeMessage();
         }
       }
