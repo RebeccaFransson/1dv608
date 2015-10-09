@@ -3,11 +3,6 @@ namespace model;
 class GoodbyeException extends \Exception {};
 session_start();
 class Login {
-    private $username = 'Admin';
-    private $password = 'Password';
-    private $errorMessage = '';
-    private $saveUsername = false;
-    private $SetLoginSuccess;
     private static $loggedInSession = 'Login::loggedIn';
 
     public function __construct($db){
@@ -19,19 +14,12 @@ class Login {
     }
     //Kollar om uppgifterna är korrekta
     public function checkLogin(Usercredentials $usercredentials, LoginListener $LoginListener){
-      $this->SetLoginSuccess = $LoginListener->SetLoginSuccess();
       //connect till databasen när jag behöver den.
     	$this->db->connetToDB();
       $this->db->loginSpecificUser($usercredentials->getUsername(), $usercredentials->getPassword());
-
-
       //gick att logga in
-      //$this->SetLoginSuccess();
-      //$this->isLoggedInLogin = true;
+      $LoginListener->SetLoginSuccess();
      $_SESSION[self::$loggedInSession] = true;
-    }
-    public function getSaveUsername(){
-      return $this->saveUsername;
     }
     public function loggingOut(){
       //loggar ut, sätter sessionen till false och förstör den

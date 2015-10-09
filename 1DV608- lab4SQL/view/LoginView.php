@@ -17,11 +17,8 @@ class LoginView extends \model\LoginListener{
 	//public $loggedOut = false;
 	private $message = '';
 	private $savedUsername = '';
-	private $LoginFailed = false;
-	private $LoginSuccess = false;
 	private $UserCredOK = false;
-	private $NotCorrectCredentials = false;
-	private $urlnewusersetted = false;
+	
 //construktor
 public function __construct($IsLoggedIn){
 	$this->IsLoggedIn = $IsLoggedIn;
@@ -39,33 +36,26 @@ public function __construct($IsLoggedIn){
 	public function checkUsercredentials(){
 			try{
 				 $us = new \model\UserCredentials($_POST[self::$name], $_POST[self::$password]);
-				 $this->SetUserCredOK();
+				 $this->UserCredOK = true;
 				 return $us;
 			}catch(\model\NameMissingException $e){
-				$this->SetLoginFailed();
+				$this->IsLoggedIn = false;
 				$this->message = 'Username is missing';
 			}catch(\model\PasswordMissingException $e){
-				$this->SetLoginFailed();
+				$this->IsLoggedIn = false;
 				$this->message = 'Password is missing';
 			}
 	}
 
-	public function SetUserCredOK(){
-    $this->UserCredOK = true;
-  }
-	public function GetUserCredOK(){
+	public function GetUserCredOK(){//används i Logincontrollern
     return $this->UserCredOK;
   }
   public function SetLoginSuccess(){
     $this->IsLoggedIn = true;
 		$this->message = 'Welcome';
   }
-	public function SetLoginFailed(){
-    $this->IsLoggedIn = false;
-  }
 	public function NotCorrectCredentials(){
 		$this->IsLoggedIn = false;
-    $this->NotCorrectCredentials = true;
 		$this->message = 'Wrong name or password';
   }
 	public function setGoodbyeMessage(){
@@ -94,11 +84,8 @@ public function __construct($IsLoggedIn){
 		}
 		return $response;
 	}
-	/**
-	* Generate HTML code on the output buffer for the logout button
-	* @param $message, String output message
-	* @return  void, BUT writes to standard output!
-	*/
+
+	//genererar ut sidan när amn är inloggad
 	private function generateLogoutButtonHTML($message) {
 		return '
 			<form  method="post" >
@@ -107,11 +94,8 @@ public function __construct($IsLoggedIn){
 			</form>
 		';
 	}
-	/**
-	* Generate HTML code on the output buffer for the logout button
-	* @param $message, String output message
-	* @return  void, BUT writes to standard output!
-	*/
+
+	//genererar ut inloggs-formulär
 	private function generateLoginFormHTML($message, $savedUsername) {
 		return '
 			<form method="post" >

@@ -19,15 +19,13 @@ class MasterController{
     //databas
     $db = new \model\UsersDAL();
     //modell
-
+    $l = new \model\Login($db);
     //view
     $dtv = new \view\DateTimeView();
     $rv = new \view\RegisterView();
+    $v = new \view\LoginView($l->getIsLoggedIn());
 
-      $l = new \model\Login($db);
-      $v = new \view\LoginView($l->getIsLoggedIn());
-
-    $bajs = false;//register
+    $urlLoginOrRegister = false;//login or register
 
     $navigation = $rv->checkURL();
      if($navigation === 'register'){
@@ -35,16 +33,14 @@ class MasterController{
        $rc = new RegisterController($rv, $r);
        $rc->startRegistration();
      }else{
-
        $lc = new LoginController($l, $v);
        $lc->startLogin();
-       $bajs = true;
+       $urlLoginOrRegister = true;
      }
 
      $lv = new \view\LayoutView($l->getIsLoggedIn(), $v->LoginResponse(), $dtv, $rv->generateRegistrationHTML());///skcika med tre eller false istället för
-     $lv->render($bajs);
+     $lv->render($urlLoginOrRegister);
   }
-
 }
 
 

@@ -13,7 +13,7 @@ class LayoutView {
 	}
 
   public function renderLink(){
-    //om vi ahr klickat skcila tillbaka back to start
+    //inloggade = ingen knapp | Register-knapp | back to start-knapp
     if($this->isLoggedIn){
       return '';
     }
@@ -34,7 +34,7 @@ class LayoutView {
           <h1>Assignment 2</h1>
           ' . $this->renderLink() . '
 
-          ' . $this->renderIsLoggedIn() . '
+          ' . $this->renderIsLoggedInTitle() . '
           <div class="container">
               ' . $this->renderForm($form) . '
               ' . $this->DateTimeView->show() . '
@@ -43,7 +43,8 @@ class LayoutView {
       </html>
     ';
   }
-  private function renderIsLoggedIn() {
+
+  private function renderIsLoggedInTitle() {
       if ($this->isLoggedIn) {
         return '<h2>Logged in</h2>';
       }

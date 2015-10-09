@@ -8,7 +8,6 @@ class LoginController {
 	}
   public function startLogin(){
       //om vi fått en post och inte är inloggade och credentials INTE är false
-      // && $this->LoginView->GetUserCredOK()
       if($this->LoginView->checkLoginPost() && !$this->Login->getIsLoggedIn()){
         //Logga in om inte användarnamn och lösenord är tomt
         $us = $this->LoginView->checkUsercredentials();
