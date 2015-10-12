@@ -1,11 +1,21 @@
+<<<<<<< HEAD
 ag har valt att skapa ett galleri till en fotograf, Mi Ritzen.
 Mi har en hemsk hemsida där inget annat än HTML används på en väldigt lågnivå.
 Hennes hemsida har hon gjort för att locka kunder att använda henne som fotograf till olika tillställningar.
+=======
+Jag har valt att skapa ett galleri till en fotograf, Mi Ritzen.
+Mi har en hemsk hemsida där inget annat än HTML används på en väldigt lågnivå. 
+Hennes hemsida har hon gjort för att locka kunder att använda henne som fotograf till olika tillställningar. 
+>>>>>>> origin/master
 Men hennes hemsida är svår navigerad och det är i princip ingen användarvänlighet för hennes användare eller henne själv.
 För att lägga till en bild på hennes hemsida måste hon ändra HTML-koden, vilket inte alls är användarvänligt för henne som inte är insatt i webbutveckling.
 
 Jag vill skapa ett galleri som först och främst är enkelt för henne och hennes kunder att använda.
+<<<<<<< HEAD
 Det ska vara enkelt för Mi att logga in och lägga till fler bilder i sitt galleri.
+=======
+Det ska vara enkelt för Mi att logga in och lägga till fler bilder i sitt galleri. 
+>>>>>>> origin/master
 Hon skall också ha en möjlighet att ta bort bilder från galleriet.
 
 Bilderna skall vara kategoriserade i olika mappar så det är lätt att navigera sig till tex Natur-fotografier.
