@@ -1,8 +1,68 @@
-Jag har valt att skapa ett galleri till en fotograf, Mi Ritzen.
-Mi har en hemsk hemsida där inget annat än HTML används på en väldigt lågnivå. Hennes hemsida har hon gjort för att locka kunder att använda henne som fotograf till olika tillställningar. Men hennes hemsida är svår navigerad och det är i princip ingen användarvänlighet för hennes användare eller henne själv.
+ag har valt att skapa ett galleri till en fotograf, Mi Ritzen.
+Mi har en hemsk hemsida där inget annat än HTML används på en väldigt lågnivå.
+Hennes hemsida har hon gjort för att locka kunder att använda henne som fotograf till olika tillställningar.
+Men hennes hemsida är svår navigerad och det är i princip ingen användarvänlighet för hennes användare eller henne själv.
 För att lägga till en bild på hennes hemsida måste hon ändra HTML-koden, vilket inte alls är användarvänligt för henne som inte är insatt i webbutveckling.
+
 Jag vill skapa ett galleri som först och främst är enkelt för henne och hennes kunder att använda.
-Det ska vara enkelt för Mi att logga in och lägga till fler bilder i sitt galleri. Hon skall också ha en möjlighet att ta bort bilder från galleriet.
+Det ska vara enkelt för Mi att logga in och lägga till fler bilder i sitt galleri.
+Hon skall också ha en möjlighet att ta bort bilder från galleriet.
+
 Bilderna skall vara kategoriserade i olika mappar så det är lätt att navigera sig till tex Natur-fotografier.
 Mis användare skall lätt kunna välja vilka bilder de vill titta på, tex Natur-fotografier.
+
 Detta projekt är också enkelt att fortsätta att utvecka på om Mi skulle vilja ha fler funktionalliteter på sitt galleri.
+
+
+
+Use Cases
+
+UC1 Admin vill logga in
+Huvud senario
+1. Börjar med att admin klickar på länken "Admin login"
+2. Systemet frågar efter användarnamn och lösenord
+3. Användaren skriver in användarnamn och lösenord
+4. Systemet försöker logga in med användarens uppgifter och berättar sedan för användaren hur inloggningen gick
+
+Alternativt sernario
+4a. Användaren kunde inte loggas in
+i error meddelande visas för användaren
+ii. Tillbaka till andra punkten i Huvud senariot
+
+
+UC2 Admin vill lägga till bild
+Huvud senario
+1. Börjar med att admin väljer en bild att ladda upp
+2. Väljer en av de sparade kategorierna och ett namn till bilden
+3. Klickar på knappen "ladda upp"
+4. Systemet sparar bilden/bilderna och dess namn till databasen
+
+Alternativt senario 1
+1. Användaren glömmer att välja en bild
+i. Systemet berättar för användaren att en bild är nödvändigt för att fortsätta
+ii. Tillbaka till huvud senario 1.
+Alternativt senario 2
+1. Användaren glömmer att välja en kategori till bilden
+i. Systemet berättar för användaren att en kategori är nödvändigt för att fortsätta
+ii. Tillbaka till huvud senario 2.
+
+
+UC3 Admin vill lägga till en ny kategori
+Huvud senario
+1. Användaren klickar på knappen "lägg till ny kategori"
+2. Systemet presenterar en textruta
+3. Användaren skriver in namn till den nya kategorien
+4. Användaren klickar på knappen "spara"
+5. Systemet sparar den nya kategorin och tar användaren tillbaka till
+changeGallery-sidan där den nya kategorin är med i listan
+
+Alternativt senario 1
+1. Användaren skriver inte in något namn till kategorin
+i. Systemet berättar för användaren att ett namn är nödvändigt för att fortsätta
+ii. Systemet ger användaren en till chans och skickar tillbaka den till Huvud senario 3
+
+
+UC4 En användare vill bläddra runt bland bilderna
+1. Börjar med att en användare går in på sidan
+2. Användaren får möjlighet att välja en kategori
+3. Systemet presenterar alla bilderna i en katergori
