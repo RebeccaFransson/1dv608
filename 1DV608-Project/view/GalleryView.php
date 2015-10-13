@@ -2,9 +2,14 @@
 namespace view;
 class GalleryView{
 
-  public function GalleryHTML(){
+  public function galleryHTML(){
     return '
-      här är ett gallery
+      <div class="img"></div>
+      <div class="img"></div>
+      <div class="img"></div>
+      <div class="img"></div>
+      <div class="img"></div>
+      <div class="img"></div>
     ';
   }
 

@@ -1,0 +1,49 @@
+body {
+    background-color: #ffffff;
+}
+#bodyAll{
+  background-color: #d0e4fe;
+  width:500px;
+  min-height: 500px;
+  margin: auto;
+}
+h1{
+  text-align: center;
+  color: #7D8998;
+}
+#loginLink{
+  float: right;
+}
+#container{
+  margin-top: 40px;
+}
+
+/*GALLERY*/
+.img{
+  border: 1px solid blue;
+  width: 110px;
+  height: 110px;
+  margin: 27px;
+  float: left;
+}
+
+
+/*LOGIN*/
+fieldset{
+    display: block;
+    margin-left: 2px;
+    margin-right: 2px;
+    padding-top: 0.35em;
+    padding-bottom: 0.625em;
+    padding-left: 6.75em;
+    padding-right: 5.75em;
+}
+
+fieldset legend{
+  text-align: center;
+  padding: 0.2em 0.5em;
+  font-size:90%;
+}
+
+
+/*CHANGE-GALLERY*/

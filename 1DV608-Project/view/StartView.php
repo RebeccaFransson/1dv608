@@ -12,16 +12,19 @@ class StartView{
       <html>
         <head>
           <meta charset="utf-8">
+          <link rel="stylesheet" type="text/css" href="style.css">
           <title>Login Example</title>
         </head>
         <body>
-          <h1>Mi Ritzens Galleri</h1>
-          '. $this->renderLink() .'
+          <div id="bodyAll">
+            <h1>Mi Ritzens Galleri</h1>
+            <div id="loginLink">'. $this->renderLink() .'</div>
 
-          <div class="container">
-              ' . $show . '
+            <div id="container">
+                ' . $show . '
+            </div>
           </div>
-         </body>
+        </body>
       </html>
     ';
   }
