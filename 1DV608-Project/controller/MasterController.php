@@ -7,12 +7,16 @@ require_once('view/LoginView.php');
 require_once('view/ChangeGalleryView.php');
 //controller
 require_once('controller/LoginController.php');
+require_once('controller/GalleryController.php');
 //modell
 require_once('model/LoginModel.php');
+require_once('model/GalleryModel.php');
+require_once('model/GalleryDAL.php');
 
 class MasterController{
   public function __construct(){
     $this->Navigation = new \view\NavigationView();
+    $this->DB = new \model\GalleryDAL();
   }
 
   public function runProgram(){
@@ -34,8 +38,10 @@ class MasterController{
     }
     //else galley
     else{
-      $gallery = new \view\GalleryView();
-      $show = $gallery->GalleryHTML();
+      $galleryModel = new \model\GalleryModel();
+      $galleryView = new \view\GalleryView($this->DB);
+      new \controller\GalleryController($galleryModel, $galleryView);
+      $show = $galleryView->GalleryHTML();
     }
 
     $start = new \view\StartView($toGalleryLink);

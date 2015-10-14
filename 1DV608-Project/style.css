@@ -19,6 +19,13 @@ h1{
 }
 
 /*GALLERY*/
+.category_name {
+  background-color: bisque;
+  font-size: 4.5em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
 .img{
   border: 1px solid blue;
   width: 110px;

@@ -13,7 +13,7 @@ class StartView{
         <head>
           <meta charset="utf-8">
           <link rel="stylesheet" type="text/css" href="style.css">
-          <title>Login Example</title>
+          <title>Mi Ritzen</title>
         </head>
         <body>
           <div id="bodyAll">
