@@ -4,7 +4,6 @@ class Image{
   private $id;
   private $name;
   private $url;
-  private $category;
 
   public function __construct($id, $name, $url){
     $this->id = $id;

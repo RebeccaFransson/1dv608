@@ -17,6 +17,9 @@ h1{
 #container{
   margin-top: 40px;
 }
+.errorMessage{
+  color: red;
+}
 
 /*GALLERY*/
 .category_name {

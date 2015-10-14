@@ -17,7 +17,7 @@ class StartView{
         </head>
         <body>
           <div id="bodyAll">
-            <h1>Mi Ritzens Galleri</h1>
+            <h1>Mi Ritzens Gallery</h1>
             <div id="loginLink">'. $this->renderLink() .'</div>
 
             <div id="container">
