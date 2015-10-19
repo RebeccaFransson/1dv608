@@ -33,11 +33,18 @@ class MasterController{
       $show = $loginView->LoginResponse();
     }
     //kolla redigera bilder när man loggat in kommer man till chgnae gallery
-    else if($this->Navigation->checkChangeGallery()) {
+    else if($this->Navigation->checkChangeGallery() || $this->Navigation->checkUploadImg()) {
+      $changeGalleryView = new \view\changeGalleryView($this->DB);
       $changeGalleryModel = new \model\ChangeGalleryModel();
       $toGalleryLink = true;
-      $changeGalleryView = new \view\changeGalleryView($this->DB);
-      new \controller\ChangeGalleryController($changeGalleryModel, $changeGalleryView);
+      $changeGalleryController = new \controller\ChangeGalleryController($changeGalleryModel, $changeGalleryView);
+      if($this->Navigation->checkUploadImg()){
+        $changeGalleryView->uploadImageToServer();
+      }else{
+        $changeGalleryController->startUpload();
+      }
+
+
       $show = $changeGalleryView->changeGalleryResponse();
     }
     //else galley
