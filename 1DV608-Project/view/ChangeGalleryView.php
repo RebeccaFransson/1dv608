@@ -71,6 +71,8 @@ class changeGalleryView{
     $imgLocation = '/var/www/html/1dv608/Project-Gallery/imageUploads/' . basename($_FILES[self::$img]['name']);
 
     try{
+      var_dump($_FILES[self::$img]);
+      echo "<br>errors: ";var_dump($_FILES[self::$img]['error']);
       if(!isset($_FILES[self::$img]['error']) || is_array($_FILES[self::$img]['error'])){
         throw new InvalidParametersException();
       }
@@ -80,9 +82,12 @@ class changeGalleryView{
       else if(!in_array($_FILES[self::$img]['type'], $okFileFormat) && !empty($_FILES[self::$img]["type"])){
         throw new InvalidFormatException();
       }
-      else{
+      else if($_FILES[self::$img]['error'] == 0){
         move_uploaded_file($_FILES[self::$img]['tmp_name'], $imgLocation);
         return true;
+      }
+      else{
+        echo "något annat fel har uppstått";
       }
     }catch(InvalidParametersException $e){
       $this->message = 'Invalid parameters.';

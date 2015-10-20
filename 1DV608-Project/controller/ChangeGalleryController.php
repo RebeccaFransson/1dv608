@@ -15,7 +15,6 @@ class ChangeGalleryController{
       $newImage = $this->changeGalleryView->checkImageInputs();
       if($this->changeGalleryView->getIMGValidation()){
         if($this->changeGalleryView->uploadImageToServer()){
-          echo "bild uppe på server lägg till i db";
             $this->changeGalleryModel->newPictureToDB($newImage);
         }
       }

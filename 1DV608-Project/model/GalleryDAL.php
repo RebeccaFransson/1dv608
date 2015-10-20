@@ -24,10 +24,10 @@ class GalleryDAL{
 //`
   public function getImagesByCategory($category){
     $sql = "SELECT image_id, image_name, image_url
-    FROM `tbl_image`
-    INNER JOIN `tbl_category`
+    FROM tbl_image
+    INNER JOIN tbl_category
     ON tbl_category.category_id=tbl_image.image_category
-    WHERE tbl_category.category_name = '".$category."'";
+    WHERE tbl_category.category_name = '$category'";
 
     $result = $this->conn->query($sql);
     if ($result->num_rows > 0) {
@@ -61,14 +61,11 @@ class GalleryDAL{
   public function uploadNewImage($path, $description, $category){
 
     //get right category id
-    $getCategoryId = "SELECT image_category
-      FROM `". self::$imgTable ."`
-      INNER JOIN tbl_category
-      ON tbl_category.category_id=tbl_image.image_category
+    $getCategoryId = "SELECT category_id
+      FROM ". self::$categoryTable ."
       WHERE tbl_category.category_name = '$category'";
-
       $getCategoryId = $this->conn->query($getCategoryId);
-      $id = $getCategoryId->fetch_assoc()["image_category"];
+      $id = $getCategoryId->fetch_assoc()["category_id"];
 
       $add = $this->conn->prepare("INSERT INTO  ". self::$imgTable ."(
   			image_url , image_name, image_category)

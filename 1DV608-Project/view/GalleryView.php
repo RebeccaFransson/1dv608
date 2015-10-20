@@ -30,7 +30,6 @@ class GalleryView{
 
   public function galleyByCategory($category){
     $imagesArray = $this->db->getImagesByCategory($category);
-    var_dump($imagesArray);
     $wholeGallery = '';
     foreach ($imagesArray as $key) {
       $newImgTag = '<div class="img"><img src="';
