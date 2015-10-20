@@ -4,8 +4,8 @@ Mi har en hemsk hemsida där inget annat än HTML används på en väldigt lågn
 Hennes hemsida har hon gjort för att locka kunder att använda henne som fotograf till olika tillställningar.
 =======
 Jag har valt att skapa ett galleri till en fotograf, Mi Ritzen.
-Mi har en hemsk hemsida där inget annat än HTML används på en väldigt lågnivå. 
-Hennes hemsida har hon gjort för att locka kunder att använda henne som fotograf till olika tillställningar. 
+Mi har en hemsk hemsida där inget annat än HTML används på en väldigt lågnivå.
+Hennes hemsida har hon gjort för att locka kunder att använda henne som fotograf till olika tillställningar.
 >>>>>>> origin/master
 Men hennes hemsida är svår navigerad och det är i princip ingen användarvänlighet för hennes användare eller henne själv.
 För att lägga till en bild på hennes hemsida måste hon ändra HTML-koden, vilket inte alls är användarvänligt för henne som inte är insatt i webbutveckling.
@@ -14,7 +14,7 @@ Jag vill skapa ett galleri som först och främst är enkelt för henne och henn
 <<<<<<< HEAD
 Det ska vara enkelt för Mi att logga in och lägga till fler bilder i sitt galleri.
 =======
-Det ska vara enkelt för Mi att logga in och lägga till fler bilder i sitt galleri. 
+Det ska vara enkelt för Mi att logga in och lägga till fler bilder i sitt galleri.
 >>>>>>> origin/master
 Hon skall också ha en möjlighet att ta bort bilder från galleriet.
 
@@ -76,3 +76,10 @@ UC4 En användare vill bläddra runt bland bilderna
 1. Börjar med att en användare går in på sidan
 2. Användaren får möjlighet att välja en kategori
 3. Systemet presenterar alla bilderna i en katergori
+
+--Skrivet av Rebecca Fransson 2015-10-07
+
+
+Då min applikation var något större än vad jag räknat med har jag nu valt att
+fokusera på inloggningen och att spara bilder.
+Bilderna sparas på servern och informationen om bilden sparas på en databas.

@@ -21,7 +21,6 @@ class changeGalleryView{
   }
 
   public function changeGalleryResponse(){
-    echo " response här skriv message ut";
     $response = $this->changeGalleryHTML($this->message);
     return $response;
   }
