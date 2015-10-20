@@ -8,7 +8,7 @@ class NewImage{
   private $category;
 
   public function __construct($path, $description, $category){
-    $this->path = $path;
+    $this->path = 'http://188.166.116.158/1dv608/Project-Gallery/imageUploads/' . $path;
     $this->description = $description;
     $this->category = $category;
 

@@ -15,19 +15,21 @@ class changeGalleryView{
 
   private $message = '';
   private $IMGValidation = false;
+  private $imgUploadSuccsess = false;
 
   public function __construct($db){
     $this->db = $db;
   }
 
   public function changeGalleryResponse(){
+    //kolla om inloggad i session
     $response = $this->changeGalleryHTML($this->message);
     return $response;
   }
 
-  public function changeGalleryHTML($message){
+  public function changeGalleryHTML($message){//'. self::$upload .'
     return '
-    <form enctype="multipart/form-data" method="post" action="?'. self::$upload .'" >
+    <form enctype="multipart/form-data" method="post" action="" >
       <fieldset>
         <legend>Upload new picture</legend>
         <p class="errorMessage">' . $message . '</p>
@@ -61,7 +63,6 @@ class changeGalleryView{
   public function uploadImageToServer(){
     $maxbit = 33554432; //4megabyte
     $okFileFormat = array(
-        'application/pdf',
         'image/jpeg',
         'image/jpg',
         'image/gif',
@@ -80,7 +81,6 @@ class changeGalleryView{
         throw new InvalidFormatException();
       }
       else{
-        echo "allt gick bra return true";
         move_uploaded_file($_FILES[self::$img]['tmp_name'], $imgLocation);
         return true;
       }
@@ -89,7 +89,7 @@ class changeGalleryView{
     }catch(ToBigFileException $e){
       $this->message = 'Exceeded filesize limit.';
     }catch(InvalidFormatException $e){
-      $this->message = 'Invalid file type. Only PDF, JPG, GIF and PNG types are accepted.';
+      $this->message = 'Invalid file type. Only JPG, GIF and PNG types are accepted.';
     }
   }
 
@@ -99,7 +99,7 @@ class changeGalleryView{
   }
   public function checkImageInputs(){
     try{
-      $newimg = new \model\NewImage($_POST[self::$img], $_POST[self::$description], $_POST[self::$category]);
+      $newimg = new \model\NewImage($_FILES[self::$img]['name'], $_POST[self::$description], $_POST[self::$category]);
       $this->IMGValidation = true;
       return $newimg;
     }catch(\model\PathMissingException $e){
@@ -112,6 +112,9 @@ class changeGalleryView{
   //GETTERS
   public function getIMGValidation(){
     return $this->IMGValidation;
+  }
+  public function getImgUploadSuccsess(){
+    return $this->imgUploadSuccsess;
   }
 
 

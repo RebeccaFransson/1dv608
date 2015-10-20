@@ -83,3 +83,4 @@ UC4 En användare vill bläddra runt bland bilderna
 Då min applikation var något större än vad jag räknat med har jag nu valt att
 fokusera på inloggningen och att spara bilder.
 Bilderna sparas på servern och informationen om bilden sparas på en databas.
+Om Admin vill ta bort bidler får den gå in på servern och ta bort dem därifrån Men en borttagnings-function är påbörjad dock bort prioriterad

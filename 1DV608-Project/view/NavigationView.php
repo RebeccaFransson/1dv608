@@ -11,8 +11,5 @@ class NavigationView{
   public function checkChangeGallery(){
     return isset($_GET[self::$changeGalleryURL]);
   }
-  public function checkUploadImg(){
-    return isset($_GET[self::$upload]);
-  }
 
 }

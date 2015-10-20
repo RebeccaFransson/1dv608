@@ -14,14 +14,11 @@ class ChangeGalleryController{
     if($this->changeGalleryView->checkUpload()){
       $newImage = $this->changeGalleryView->checkImageInputs();
       if($this->changeGalleryView->getIMGValidation()){
-        //kanske kolla om upladimgaeToServer retunerar true och gå då vidare till modellen
-        //gör sedan en url till bilden i modellen
         if($this->changeGalleryView->uploadImageToServer()){
-            echo "bilden laddades upp korrekt";
+          echo "bild uppe på server lägg till i db";
+            $this->changeGalleryModel->newPictureToDB($newImage);
         }
       }
-      //var_dump($newImage->getImageDescription());
-
     }
   }
 
