@@ -80,7 +80,8 @@ UC4 En användare vill bläddra runt bland bilderna
 --Skrivet av Rebecca Fransson 2015-10-07
 
 
-Då min applikation var något större än vad jag räknat med har jag nu valt att
+Då min applikation var något större än vad jag räknat med har jag istället valt att
 fokusera på inloggningen och att spara bilder.
+Appilkationens fokus ligger också mycket på valideringen.
 Bilderna sparas på servern och informationen om bilden sparas på en databas.
 Om Admin vill ta bort bidler får den gå in på servern och ta bort dem därifrån Men en borttagnings-function är påbörjad dock bort prioriterad

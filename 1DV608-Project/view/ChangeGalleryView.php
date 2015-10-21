@@ -5,7 +5,7 @@ class ToBigFileException extends \Exception {};
 class InvalidFormatException extends \Exception {};
 require_once('model/NewImage.php');
 
-class changeGalleryView{
+class ChangeGalleryView{
   private static $messageId = 'LoginView::Message';
   private static $sendImg = 'LoginView::SendIMG';
   private static $img = 'LoginView::IMG';
@@ -31,18 +31,16 @@ class changeGalleryView{
     return '
     <form enctype="multipart/form-data" method="post" action="" >
       <fieldset>
-        <legend>Upload new picture</legend>
+        <legend>Upload new picture</legend> <br>
         <p class="errorMessage">' . $message . '</p>
-        <input type="file" name="' . self::$img . '">
-        <p>Write a short description</p>
-        <input type="text" name="'. self::$description .'" />
-        <p>Choose a category</p>
+        <p><input type="file" name="' . self::$img . '"></p>
+        <p><label>Write a short description</label>
+        <input type="text" name="'. self::$description .'" /></p>
+        <label>Choose a category</label>
         <select name="'. self::$category .'">
         '. $this->getAllCategories() .'
         </select>
-
-        <br>
-        <input type="submit" name="' . self::$sendImg . '" value="Upload picture" />
+        <p><input type="submit" name="' . self::$sendImg . '" value="Upload picture" /></p>
       </fieldset>
     </form>
     ';

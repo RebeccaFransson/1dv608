@@ -2,6 +2,7 @@
 namespace view;
 class StartView{
   private static $loginURL = '?login';
+  private static $contactURL = '?contact';
 
   public function __construct($toGalleryLink){
     $this->toGalleryLink = $toGalleryLink;
@@ -39,11 +40,8 @@ class StartView{
   }
   private function renderNavigation(){
     return '<ul><li><a href="#">Mi Ritzen</a></li>
-    <li><a href="#">Kategorier</a><ul>
-      <li><a href="#">Nature</a></li>
-      <li><a href="#">People</a></li>
-      </ul></li>
-    <li><a href="#">Kontakt</a></li></ul>';
+    <li><a href="?">Kategorier</a></li>
+    <li><a href="'.self::$contactURL.'">Kontakt</a></li></ul>';
   }
 
 }
