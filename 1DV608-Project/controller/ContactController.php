@@ -8,9 +8,11 @@ class ContactController{
   public function startContactPage(){
     if($this->contactView->checkSendButton()){
       //en till ifsats för i denna funktionen sätter jag namnen i formuläret så användaren slipper skriva om
-      if(!$this->contactView->checkInputsMissing()){
-        $this->contactModel->sendNewEmail($this->contactView->getInputValues());
+      $emailObj = $this->contactView->getAndCheckAllInputs();
+      if($this->contactView->getValidationOK()){
+        $this->contactModel->sendNewEmail($emailObj);
       }
+
     }
   }
 }

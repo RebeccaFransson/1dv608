@@ -69,6 +69,7 @@ h1{
   padding-bottom: 10px;
   border-bottom: aliceblue solid;
   text-transform: uppercase;
+  font-family: monospace;
 }
 
 .img{

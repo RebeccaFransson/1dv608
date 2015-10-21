@@ -22,7 +22,7 @@ require_once('model/ContactModel.php');
 class MasterController{
   public function __construct(){
     $this->Navigation = new \view\NavigationView();
-    //$this->DB = new \model\GalleryDAL();
+  //  $this->DB = new \model\GalleryDAL();
     $this->DB = '';
   }
 
