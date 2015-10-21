@@ -3,6 +3,7 @@ namespace view;
 class StartView{
   private static $loginURL = '?login';
   private static $contactURL = '?contact';
+  private static $infoURL = '?information';
 
   public function __construct($toGalleryLink){
     $this->toGalleryLink = $toGalleryLink;
@@ -39,7 +40,7 @@ class StartView{
     }
   }
   private function renderNavigation(){
-    return '<ul><li><a href="#">Mi Ritzen</a></li>
+    return '<ul><li><a href="'. self::$infoURL .'">Mi Ritzen</a></li>
     <li><a href="?">Kategorier</a></li>
     <li><a href="'.self::$contactURL.'">Kontakt</a></li></ul>';
   }

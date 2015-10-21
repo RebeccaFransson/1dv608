@@ -7,17 +7,27 @@ class LoginView{
   private static $name = 'LoginView::UserName';
   private static $password = 'LoginView::Password';
   private static $login = 'LoginView::Login';
+  private static $loginSession = 'LoginView::LoginSession';
 
   private $message = '';
   private $savedUsername = '';
   private $userCredOK = false;
 
-  public function __construct($loginModel){
-    $this->loginModel = $loginModel;
+  public function __construct(){
+    var_dump(isset($_SESSION[self::$loginSession]));
+    if(!isset($_SESSION[self::$loginSession])){
+        $_SESSION[self::$loginSession] = false;
+      }
   }
 
   public function loginResponse(){
-    $response = $this->LoginHTML();
+    $response = '';
+    if($_SESSION[self::$loginSession]){
+      $response = '<p><a href="?changeGallery">Upload images</a><br>
+      <a href="?">Delete images(not done)</a><br></p>';
+    }else{
+      $response = $this->LoginHTML();
+    }
     return $response;
   }
 
@@ -48,16 +58,27 @@ class LoginView{
 				 return $us;
 			}catch(\model\NameMissingException $e){
 				//$this->IsLoggedIn = false;
-				$this->message = 'Username is missing';
+				$this->message = 'Username is missing!';
 			}catch(\model\PasswordMissingException $e){
 				//$this->IsLoggedIn = false;
-				$this->message = 'Password is missing';
+				$this->message = 'Password is missing!';
 			}
+  }
+  public function notCorrectCredentials(){
+    $this->message = 'Not correct credentials!';
+  }
+  public function successLogin(){
+    echo " sätter session till true ";
+    $_SESSION[self::$loginSession] = true;
   }
 
   //GETTERS
   public function getUserCredOK(){
     return $this->userCredOK;
+  }
+  public function getIsLoggedIn(){
+    echo "hämtar session = "; var_dump($_SESSION[self::$loginSession]);
+    return $_SESSION[self::$loginSession];
   }
 
 }

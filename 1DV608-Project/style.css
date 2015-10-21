@@ -53,7 +53,7 @@ h1{
   float: left;
   width: 100%;
   position: relative;
-  bottom: 20px;
+  bottom: 55px;
   overflow-x: auto;
 }
 .errorMessage{
@@ -79,6 +79,13 @@ h1{
   margin: 27px;
   float: left;
 }
+/*INFORMATION*/
+.information h3{
+  text-align: center;
+  }
+.information p{
+  padding: 0 30px 0 30px;
+  }
 /*LOGIN*/
 
 /*CHANGE-GALLERY*/

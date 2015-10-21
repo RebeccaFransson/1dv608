@@ -1,11 +1,13 @@
 <?php
 namespace model;
+class NotCorrectCredentialsException extends \Exception {};
 require_once('model/Image.php');
 
 class GalleryDAL{
 
   private static $imgTable = "tbl_image";
   private static $categoryTable = "tbl_category";
+  private static $adminTable = "Admin";
   private static $servername = "localhost";
   private static $usernameDB = "root";
   private static $passwordDB = "";
@@ -75,6 +77,15 @@ class GalleryDAL{
   		}
   		$add->bind_param('ssi', $path, $description, $id);
   		$add->execute();
+  }
+
+  public function tryToLoggIn($username, $password){
+    $login = "SELECT * FROM  `". self::$adminTable ."` WHERE BINARY username = '$username' AND password =  '$password'";
+    $query = mysqli_query($this->conn, $login);
+    $result = mysqli_fetch_row($query);
+    if ($result === NULL) {
+      throw new NotCorrectCredentialsException();
+    }
   }
 
 

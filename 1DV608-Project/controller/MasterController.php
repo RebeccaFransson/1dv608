@@ -7,6 +7,7 @@ require_once('view/GalleryView.php');
 require_once('view/LoginView.php');
 require_once('view/ChangeGalleryView.php');
 require_once('view/ContactView.php');
+require_once('view/InformationPageView.php');
 //controller
 require_once('controller/LoginController.php');
 require_once('controller/GalleryController.php');
@@ -22,23 +23,23 @@ require_once('model/ContactModel.php');
 class MasterController{
   public function __construct(){
     $this->Navigation = new \view\NavigationView();
-  //  $this->DB = new \model\GalleryDAL();
-    $this->DB = '';
+    $this->DB = new \model\GalleryDAL();
+    //$this->DB = '';
   }
 
   public function runProgram(){
+    $loginView = new \view\LoginView();
     $toGalleryLink = false;
     $show = '';
     //kolla om inlogg i url
     if($this->Navigation->checkLogin()){
       $toGalleryLink = true;
-      $loginModel = new \model\LoginModel();
-      $loginView = new \view\LoginView($loginModel);
+      $loginModel = new \model\LoginModel($this->DB);
       new \controller\LoginController($loginModel, $loginView);
       $show = $loginView->LoginResponse();
     }
     //kolla redigera bilder när man loggat in kommer man till chgnae gallery
-    else if($this->Navigation->checkChangeGallery()) {
+    else if($this->Navigation->checkChangeGallery() && $loginView->getIsLoggedIn()) {
       $changeGalleryView = new \view\ChangeGalleryView($this->DB);
       $changeGalleryModel = new \model\ChangeGalleryModel($this->DB);
       $toGalleryLink = true;
@@ -51,7 +52,11 @@ class MasterController{
       $contactModel = new \model\ContactModel();
       $contactController = new \controller\ContactController($contactModel, $contactView);
       $contactController->startContactPage();//väntar på att användaren skall skicka ett formulär
-      $show = $contactView->contactHTML();
+      $show = $contactView->contactRender();
+    }
+    else if($this->Navigation->checkInfoPage()) {
+      $informationView = new \view\InformationPageView();
+      $show = $informationView->informationPageHTML();
     }
     else{
       $galleryModel = new \model\GalleryModel();

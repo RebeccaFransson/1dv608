@@ -16,10 +16,18 @@ class ContactView{
   private $clientMessageValue = '';
 
   private $validationOK = false;
+  private $emailSent = false;
 
+public function contactRender(){
+  $response = '';
+  if($this->emailSent){
+    $response = '<h1>Thank you for you mail!</h1>';
+  }
+  $response .= $this->contactHTML();
+  return $response;
+}
 
-
-  public function contactHTML(){
+  private function contactHTML(){
     return '
       <form method="post" >
         <fieldset>
@@ -72,6 +80,9 @@ private function setFields(){
   $this->lastnameValue = $_POST[self::$lastName];
   $this->emailAdressValue = $_POST[self::$emailAdress];
   $this->clientMessageValue = $_POST[self::$clientMessage];
+}
+public function setEmailSent(){
+  $this->emailSent = true;
 }
 
 //SETTERS

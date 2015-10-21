@@ -11,7 +11,6 @@ class ChangeGalleryView{
   private static $img = 'LoginView::IMG';
   private static $category = 'LoginView::Category';
   private static $description = 'LoginView::Description';
-  private static $upload = 'Upload';
 
   private $message = '';
   private $IMGValidation = false;
@@ -27,7 +26,7 @@ class ChangeGalleryView{
     return $response;
   }
 
-  public function changeGalleryHTML($message){//'. self::$upload .'
+  public function changeGalleryHTML($message){
     return '
     <form enctype="multipart/form-data" method="post" action="" >
       <fieldset>
@@ -36,10 +35,10 @@ class ChangeGalleryView{
         <p><input type="file" name="' . self::$img . '"></p>
         <p><label>Write a short description</label>
         <input type="text" name="'. self::$description .'" /></p>
-        <label>Choose a category</label>
+        <p><label>Choose a category</label>
         <select name="'. self::$category .'">
         '. $this->getAllCategories() .'
-        </select>
+        </select></p>
         <p><input type="submit" name="' . self::$sendImg . '" value="Upload picture" /></p>
       </fieldset>
     </form>
