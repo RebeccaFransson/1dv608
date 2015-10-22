@@ -21,7 +21,7 @@ class ContactView{
 public function contactRender(){
   $response = '';
   if($this->emailSent){
-    $response = '<h1>Thank you for you mail!</h1>';
+    $response = '<p class="success">Thank you for your mail!</p>';
   }
   $response .= $this->contactHTML();
   return $response;
@@ -34,15 +34,11 @@ public function contactRender(){
           <legend>Contact - Write a email to Mi Ritzen</legend>
           <div class="FirstInputs">
           <p class="errorMessage">' . $this->errorMessage . '</p>
-          <p><label for="' . self::$firstName . '">Firstname</label>
-          <input type="text" name="' . self::$firstName . '" value="'. $this->firstnameValue .'" /></p>
-          <p><label for="' . self::$lastName . '">Lastname</label>
-          <input type="text" name="' . self::$lastName . '" value="'. $this->lastnameValue .'" /></p>
-          <p><label for="' . self::$emailAdress . '">Email adress</label>
-          <input type="text" name="' . self::$emailAdress . '" value="'. $this->emailAdressValue .'" /></p>
+          <p><input type="text" placeholder="Firstname" name="' . self::$firstName . '" value="'. $this->firstnameValue .'" /></p>
+          <p><input type="text" placeholder="Lastname" name="' . self::$lastName . '" value="'. $this->lastnameValue .'" /></p>
+          <p><input type="text" placeholder="Email adress" name="' . self::$emailAdress . '" value="'. $this->emailAdressValue .'" /></p>
           </div>
-          <p class="klientMessage"><label for="' . self::$clientMessage . '">Your message</label>
-          <textarea rows="4" cols="30" name="' . self::$clientMessage . '" value="'. $this->clientMessageValue .'" /></textarea>
+          <p class="klientMessage"><textarea placeholder="Write you message here" rows="4" cols="30" name="' . self::$clientMessage . '" value="'. $this->clientMessageValue .'" /></textarea>
           <br>
           <input type="submit" name="' . self::$sendButton . '" value="Send" /></p>
         </fieldset>

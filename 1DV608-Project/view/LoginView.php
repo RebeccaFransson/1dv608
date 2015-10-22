@@ -19,8 +19,9 @@ class LoginView{
   public function loginResponse(){
     $response = '';
     if($this->sessions->checkSessionLoggedIn()){
-      $response = '<p><a href="?changeGallery">Upload images</a><br>
-      <a href="?">Delete images(not done)</a><br></p>';
+      $response = '<p class="links"><a href="?changeGallery">Upload images</a><br>
+      <a href="?">Delete images(not done)</a><br>
+      <a href="?">Add new admin(not done)</a><br></p>';
     }else{
       $response = $this->LoginHTML();
     }
@@ -33,10 +34,8 @@ class LoginView{
       <fieldset>
         <legend>Login - enter Username and password</legend>
         <p class="errorMessage">' . $this->message . '</p>
-        <p><label for="' . self::$name . '">Username</label>
-        <input type="text" id="' . self::$name . '" name="' . self::$name . '" value="' . $this->savedUsername . '" /></p>
-        <p><label for="' . self::$password . '">Password  </label>
-        <input type="password" id="' . self::$password . '" name="' . self::$password . '" /></p>
+        <p><input type="text" placeholder="Username" id="' . self::$name . '" name="' . self::$name . '" value="' . $this->savedUsername . '" /></p>
+        <p><input type="password" placeholder="Password" id="' . self::$password . '" name="' . self::$password . '" /></p>
         <p><input type="submit" name="' . self::$login . '" value="login" /></p>
       </fieldset>
     </form>

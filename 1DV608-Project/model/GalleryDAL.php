@@ -3,6 +3,7 @@ namespace model;
 class NotCorrectCredentialsException extends \Exception {};
 class ProblemWithDatabaseException extends \Exception {};
 class ExistingImageException extends \Exception {};
+class NoCategorysException extends \Exception {};
 require_once('model/Image.php');
 
 class GalleryDAL{
@@ -51,12 +52,11 @@ class GalleryDAL{
     $result = $this->conn->query($sql);
 
     if ($result->num_rows > 0) {
-        // output data of each row
         while($row = $result->fetch_assoc()) {
             Array_push($this->categoryArray, $row["category_name"]);
         }
     } else {
-        echo "0 results";//kasta exeption
+        throw new NoCategorysException();
     }
     return $this->categoryArray;
   }
@@ -71,7 +71,7 @@ class GalleryDAL{
 
   public function checkExistingImage($path, $description, $category){
     $id = $this->getCategoryId($category);
-    $getexist = "SELECT 1 FROM ". self::$imgTable ." WHERE image_url='$path' AND image_name='$description' AND image_category='$id'";
+    $getexist = "SELECT 1 FROM ". self::$imgTable ." WHERE image_url='$path' AND image_category='$id'";
     $query = mysqli_query($this->conn, $getexist);
     $result = mysqli_fetch_row($query);
     if ($result[0] >= 1) {
@@ -79,6 +79,25 @@ class GalleryDAL{
       return false;
     }
     return true;
+  }
+  private function checkExistingCategory($category){
+    $getexist = "SELECT 1 FROM ". self::$categoryTable ." WHERE category_name='$category'";
+    $query = mysqli_query($this->conn, $getexist);
+    $result = mysqli_fetch_row($query);
+    if ($result[0] >= 1) {
+      throw new ExistingImageException();
+      return false;
+    }
+    return true;
+  }
+  public function insertNewCategory($category){
+    $this->checkExistingCategory($category);
+    $add = $this->conn->prepare("INSERT INTO  ". self::$categoryTable ."(category_name) VALUES ('". $category ."')");
+    if ($add === FALSE) {
+      throw new ProblemWithDatabaseException();
+      return false;//körs ej pga exeption
+    }
+    $add->execute();
   }
   //NEW image
   public function uploadNewImage($path, $description, $category){

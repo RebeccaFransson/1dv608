@@ -26,16 +26,16 @@ class ChangeGalleryView{
       $this->imgUploadSuccsess = false;
       $response = '<p class="success">Image successfully uploaded!</p>';
     }
-    $response .= $this->changeGalleryHTML($this->message);
+    $response .= $this->changeGalleryHTML();
     return $response;
   }
 
-  public function changeGalleryHTML($message){
+  public function changeGalleryHTML(){
     return '
     <form enctype="multipart/form-data" method="post" action="" >
       <fieldset>
         <legend>Upload new picture</legend> <br>
-        <p class="errorMessage">' . $message . '</p>
+        <p class="errorMessage">' . $this->message . '</p>
         <p><input type="file" name="' . self::$img . '"></p>
         <p><label>Write a short description</label><br>
         <input type="text" name="'. self::$description .'" /></p>
@@ -44,6 +44,7 @@ class ChangeGalleryView{
         '. $this->getAllCategories() .'
         </select></p>
         <p><input type="submit" name="' . self::$sendImg . '" value="Upload picture" /></p>
+        <p><a href="?newCategory"/>Add new category</a></p>
       </fieldset>
     </form>
     ';
@@ -72,8 +73,6 @@ class ChangeGalleryView{
     $imgLocation = '/var/www/html/1dv608/Project-Gallery/imageUploads/' . basename($_FILES[self::$img]['name']);
 
     try{
-      var_dump($_FILES[self::$img]);
-      echo "<br>errors: ";var_dump($_FILES[self::$img]['error']);
       if(!isset($_FILES[self::$img]['error']) || is_array($_FILES[self::$img]['error'])){
         throw new InvalidParametersException();
       }
@@ -88,7 +87,7 @@ class ChangeGalleryView{
         return true;
       }
       else{
-        echo "något annat fel har uppstått";
+        $this->message =  "Oväntat fel på servern, vi beklagar! :(";
       }
     }catch(InvalidParametersException $e){
       $this->message = 'Invalid parameters.';

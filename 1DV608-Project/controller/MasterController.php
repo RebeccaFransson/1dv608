@@ -8,12 +8,13 @@ require_once('view/LoginView.php');
 require_once('view/ChangeGalleryView.php');
 require_once('view/ContactView.php');
 require_once('view/InformationPageView.php');
+require_once('view/NewCategoryView.php');
 require_once('view/Sessions.php');
 //controller
 require_once('controller/LoginController.php');
-require_once('controller/GalleryController.php');
 require_once('controller/ChangeGalleryController.php');
 require_once('controller/ContactController.php');
+require_once('controller/NewCategoryController.php');
 //modell
 require_once('model/LoginModel.php');
 require_once('model/GalleryModel.php');
@@ -24,7 +25,6 @@ class MasterController{
   public function __construct(){
     $this->Navigation = new \view\NavigationView();
     $this->DB = new \model\GalleryDAL();
-    //$this->DB = '';
   }
 
   public function runProgram(){
@@ -44,6 +44,12 @@ class MasterController{
       $changeGalleryController->startUpload();
       $show = $changeGalleryView->changeGalleryResponse();
     }
+    else if($this->Navigation->checkNewCategory() && $sessions->checkSessionLoggedIn()) {
+      $newCategoryView = new \view\NewCategoryView();
+      $newCategoryController = new \controller\NewCategoryController($this->DB, $newCategoryView);
+      $newCategoryController->startNewCategory();
+      $show = $newCategoryView->newCategoryResponse();
+    }
     else if($this->Navigation->checkContactPage()) {
       $contactView = new \view\ContactView();
       $contactModel = new \model\ContactModel();
@@ -62,7 +68,6 @@ class MasterController{
     else{
       $galleryModel = new \model\GalleryModel();
       $galleryView = new \view\GalleryView($this->DB);
-      new \controller\GalleryController($galleryModel, $galleryView);
       $show = $galleryView->GalleryHTML();
     }
 

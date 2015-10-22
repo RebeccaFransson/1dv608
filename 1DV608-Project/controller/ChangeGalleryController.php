@@ -16,13 +16,12 @@ class ChangeGalleryController{
       if($this->changeGalleryView->getIMGValidation()){
         if($this->changeGalleryView->uploadImageToServer()){
             try{
-              //finns bilden redan?
-              $this->DB->checkExistingImage($newImage->getImagePath(), $newImage->getImageDescription(), $newImage->getCategory());
-              //har den returnat nej - kör vidare
-
-              $imageIsUploaded = $this->DB->uploadNewImage($newImage->getImagePath(), $newImage->getImageDescription(), $newImage->getCategory());
-              if($imageIsUploaded){
-                $this->changeGalleryView->imageSuccessUpload();
+              $checkExist = $this->DB->checkExistingImage($newImage->getImagePath(), $newImage->getImageDescription(), $newImage->getCategory());
+              if($checkExist){
+                $imageIsUploaded = $this->DB->uploadNewImage($newImage->getImagePath(), $newImage->getImageDescription(), $newImage->getCategory());
+                if($imageIsUploaded){
+                  $this->changeGalleryView->imageSuccessUpload();
+                }
               }
             }catch(\model\ProblemWithDatabaseException $e){
               $this->changeGalleryView->problemWithDB();

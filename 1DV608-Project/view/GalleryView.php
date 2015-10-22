@@ -18,12 +18,16 @@ class GalleryView{
   }
 
   public function galleryCategorys(){
-    $categorys = $this->db->getCategorys();
     $AllCategorys = '';
-    foreach ($categorys as $key) {
-      $AllCategorys .= '<div class="category_name"><a href="?category=';
-      $AllCategorys .= $key.'">';
-      $AllCategorys .= $key.'</a></div>';
+    try{
+      $categorys = $this->db->getCategorys();
+      foreach ($categorys as $key) {
+        $AllCategorys .= '<div class="category_name"><a href="?category=';
+        $AllCategorys .= $key.'">';
+        $AllCategorys .= $key.'</a></div>';
+      }
+    }catch(NoCategorysException $e){
+        $AllCategorys = '<p class="errorMessage">There is no categorys in the database!</p>';
     }
     return $AllCategorys;
   }

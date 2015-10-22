@@ -34,7 +34,6 @@ class StartView{
   }
 
   private function renderLink(){
-    var_dump($_GET);
     if($this->IsLoggedIn){
       return '<a href="?logout">Logout</a>   <a href='. self::$loginURL .'>Login Page</a>';
     }else{
