@@ -5,8 +5,8 @@ class StartView{
   private static $contactURL = '?contact';
   private static $infoURL = '?information';
 
-  public function __construct($toGalleryLink){
-    $this->toGalleryLink = $toGalleryLink;
+  public function __construct($IsLoggedIn){
+    $this->IsLoggedIn = $IsLoggedIn;
   }
 
   public function renderLayout($show){
@@ -19,7 +19,8 @@ class StartView{
         </head>
         <body>
           <div id="bodyAll">
-            <div id="header"><div id="loginLink">'. $this->renderLink() .'</div></div>
+          <div id="loginLink">'. $this->renderLink() .'</div>
+            <div id="header"></div>
             <div id="navigation">'. $this->renderNavigation() .'</div>
 
 
@@ -33,8 +34,9 @@ class StartView{
   }
 
   private function renderLink(){
-    if($this->toGalleryLink){
-      return '<a href="?">Back to Gallery</a>';
+    var_dump($_GET);
+    if($this->IsLoggedIn){
+      return '<a href="?logout">Logout</a>   <a href='. self::$loginURL .'>Login Page</a>';
     }else{
       return '<a href='. self::$loginURL .'>Admin login</a>';
     }

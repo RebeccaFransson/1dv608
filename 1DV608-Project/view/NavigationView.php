@@ -5,7 +5,7 @@ class NavigationView{
   private static $changeGalleryURL = 'changeGallery';
   private static $contactPageURL = 'contact';
   private static $infoPageURL = 'information';
-  private static $loginSession = 'LoginView::LoginSession';
+  private static $logoutURL = 'logout';
 
   public function checkLogin(){
     return isset($_GET[self::$loginURL]);
@@ -19,9 +19,8 @@ class NavigationView{
   public function checkInfoPage(){
     return isset($_GET[self::$infoPageURL]);
   }
-  public function checkIsLoggedIn(){
-    var_dump($_SESSION);
-    return $_SESSION[self::$loginSession];
+  public function checkLogout(){
+    return isset($_GET[self::$logoutURL]);
   }
 
 }

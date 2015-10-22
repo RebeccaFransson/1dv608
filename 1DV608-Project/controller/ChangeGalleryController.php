@@ -2,8 +2,8 @@
 namespace controller;
 class ChangeGalleryController{
 
-  public function __construct($changeGalleryModel, $changeGalleryView){
-    $this->changeGalleryModel = $changeGalleryModel;
+  public function __construct($DB, $changeGalleryView){
+    $this->DB = $DB;
     $this->changeGalleryView = $changeGalleryView;
 
     //$this->startUpload();
@@ -15,7 +15,20 @@ class ChangeGalleryController{
       $newImage = $this->changeGalleryView->checkImageInputs();
       if($this->changeGalleryView->getIMGValidation()){
         if($this->changeGalleryView->uploadImageToServer()){
-            $this->changeGalleryModel->newPictureToDB($newImage);
+            try{
+              //finns bilden redan?
+              $this->DB->checkExistingImage($newImage->getImagePath(), $newImage->getImageDescription(), $newImage->getCategory());
+              //har den returnat nej - kör vidare
+
+              $imageIsUploaded = $this->DB->uploadNewImage($newImage->getImagePath(), $newImage->getImageDescription(), $newImage->getCategory());
+              if($imageIsUploaded){
+                $this->changeGalleryView->imageSuccessUpload();
+              }
+            }catch(\model\ProblemWithDatabaseException $e){
+              $this->changeGalleryView->problemWithDB();
+            }catch(\model\ExistingImageException $e){
+              $this->changeGalleryView->allreadyExistingImage();
+            }
         }
       }
     }

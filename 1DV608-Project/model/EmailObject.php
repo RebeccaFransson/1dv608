@@ -42,7 +42,7 @@ class EmailObject{
     return $this->firstName;
   }
   public function getLastname(){
-    return $this->lastname;
+    return $this->lastName;
   }
   public function getEmailAdress(){
     return $this->emailAdress;

@@ -8,6 +8,7 @@ require_once('view/LoginView.php');
 require_once('view/ChangeGalleryView.php');
 require_once('view/ContactView.php');
 require_once('view/InformationPageView.php');
+require_once('view/Sessions.php');
 //controller
 require_once('controller/LoginController.php');
 require_once('controller/GalleryController.php');
@@ -17,7 +18,6 @@ require_once('controller/ContactController.php');
 require_once('model/LoginModel.php');
 require_once('model/GalleryModel.php');
 require_once('model/GalleryDAL.php');
-require_once('model/ChangeGalleryModel.php');
 require_once('model/ContactModel.php');
 
 class MasterController{
@@ -28,22 +28,19 @@ class MasterController{
   }
 
   public function runProgram(){
-    $loginView = new \view\LoginView();
-    $toGalleryLink = false;
+    $sessions = new \view\Sessions();
     $show = '';
     //kolla om inlogg i url
     if($this->Navigation->checkLogin()){
-      $toGalleryLink = true;
+      $loginView = new \view\LoginView($sessions);
       $loginModel = new \model\LoginModel($this->DB);
       new \controller\LoginController($loginModel, $loginView);
       $show = $loginView->LoginResponse();
     }
     //kolla redigera bilder när man loggat in kommer man till chgnae gallery
-    else if($this->Navigation->checkChangeGallery() && $loginView->getIsLoggedIn()) {
+    else if($this->Navigation->checkChangeGallery() && $sessions->checkSessionLoggedIn()) {
       $changeGalleryView = new \view\ChangeGalleryView($this->DB);
-      $changeGalleryModel = new \model\ChangeGalleryModel($this->DB);
-      $toGalleryLink = true;
-      $changeGalleryController = new \controller\ChangeGalleryController($changeGalleryModel, $changeGalleryView);
+      $changeGalleryController = new \controller\ChangeGalleryController($this->DB, $changeGalleryView);
       $changeGalleryController->startUpload();
       $show = $changeGalleryView->changeGalleryResponse();
     }
@@ -58,6 +55,10 @@ class MasterController{
       $informationView = new \view\InformationPageView();
       $show = $informationView->informationPageHTML();
     }
+    else if($this->Navigation->checkLogout()) {
+      $sessions->setLogoutDestroy();
+      header('Location: http://188.166.116.158/1dv608/Project-Gallery/?');
+    }
     else{
       $galleryModel = new \model\GalleryModel();
       $galleryView = new \view\GalleryView($this->DB);
@@ -65,7 +66,7 @@ class MasterController{
       $show = $galleryView->GalleryHTML();
     }
 
-    $start = new \view\StartView($toGalleryLink);
+    $start = new \view\StartView($sessions->checkSessionLoggedIn());
     $start->renderLayout($show);
 
   }

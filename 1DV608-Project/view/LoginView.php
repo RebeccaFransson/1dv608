@@ -7,22 +7,18 @@ class LoginView{
   private static $name = 'LoginView::UserName';
   private static $password = 'LoginView::Password';
   private static $login = 'LoginView::Login';
-  private static $loginSession = 'LoginView::LoginSession';
 
   private $message = '';
   private $savedUsername = '';
   private $userCredOK = false;
 
-  public function __construct(){
-    var_dump(isset($_SESSION[self::$loginSession]));
-    if(!isset($_SESSION[self::$loginSession])){
-        $_SESSION[self::$loginSession] = false;
-      }
+  public function __construct($sessions){
+    $this->sessions = $sessions;
   }
 
   public function loginResponse(){
     $response = '';
-    if($_SESSION[self::$loginSession]){
+    if($this->sessions->checkSessionLoggedIn()){
       $response = '<p><a href="?changeGallery">Upload images</a><br>
       <a href="?">Delete images(not done)</a><br></p>';
     }else{
@@ -68,17 +64,11 @@ class LoginView{
     $this->message = 'Not correct credentials!';
   }
   public function successLogin(){
-    echo " sätter session till true ";
-    $_SESSION[self::$loginSession] = true;
+    $this->sessions->setSessionLoggedIn();
   }
-
   //GETTERS
   public function getUserCredOK(){
     return $this->userCredOK;
-  }
-  public function getIsLoggedIn(){
-    echo "hämtar session = "; var_dump($_SESSION[self::$loginSession]);
-    return $_SESSION[self::$loginSession];
   }
 
 }

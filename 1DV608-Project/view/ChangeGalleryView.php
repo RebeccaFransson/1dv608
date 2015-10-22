@@ -21,8 +21,12 @@ class ChangeGalleryView{
   }
 
   public function changeGalleryResponse(){
-    //kolla om inloggad i session
-    $response = $this->changeGalleryHTML($this->message);
+    $response = '';
+    if($this->imgUploadSuccsess){
+      $this->imgUploadSuccsess = false;
+      $response = '<p class="success">Image successfully uploaded!</p>';
+    }
+    $response .= $this->changeGalleryHTML($this->message);
     return $response;
   }
 
@@ -33,7 +37,7 @@ class ChangeGalleryView{
         <legend>Upload new picture</legend> <br>
         <p class="errorMessage">' . $message . '</p>
         <p><input type="file" name="' . self::$img . '"></p>
-        <p><label>Write a short description</label>
+        <p><label>Write a short description</label><br>
         <input type="text" name="'. self::$description .'" /></p>
         <p><label>Choose a category</label>
         <select name="'. self::$category .'">
@@ -118,7 +122,17 @@ class ChangeGalleryView{
   public function getImgUploadSuccsess(){
     return $this->imgUploadSuccsess;
   }
-
+  //SETTERS
+  public function imageSuccessUpload(){
+    $this->imgUploadSuccsess = true;
+  }
+  //SET MESSAGE! EXEPTIONS FROM CONTROLLER
+  public function allreadyExistingImage(){
+    $this->message = 'Image is already in the gallery!';
+  }
+  public function problemWithDB(){
+    $this->message = 'Ops! Someting went wrong when importing the image, try again!';
+  }
 
 
 }

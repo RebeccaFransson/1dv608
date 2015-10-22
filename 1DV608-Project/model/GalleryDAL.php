@@ -1,6 +1,8 @@
 <?php
 namespace model;
 class NotCorrectCredentialsException extends \Exception {};
+class ProblemWithDatabaseException extends \Exception {};
+class ExistingImageException extends \Exception {};
 require_once('model/Image.php');
 
 class GalleryDAL{
@@ -59,24 +61,39 @@ class GalleryDAL{
     return $this->categoryArray;
   }
 
-  //NEW image
-  public function uploadNewImage($path, $description, $category){
-
-    //get right category id
+  private function getCategoryId($category){
     $getCategoryId = "SELECT category_id
       FROM ". self::$categoryTable ."
       WHERE tbl_category.category_name = '$category'";
       $getCategoryId = $this->conn->query($getCategoryId);
-      $id = $getCategoryId->fetch_assoc()["category_id"];
+      return $getCategoryId->fetch_assoc()["category_id"];
+  }
 
+  public function checkExistingImage($path, $description, $category){
+    $id = $this->getCategoryId($category);
+    $getexist = "SELECT 1 FROM ". self::$imgTable ." WHERE image_url='$path' AND image_name='$description' AND image_category='$id'";
+    $query = mysqli_query($this->conn, $getexist);
+    $result = mysqli_fetch_row($query);
+    if ($result[0] >= 1) {
+      throw new ExistingImageException();
+      return false;
+    }
+    return true;
+  }
+  //NEW image
+  public function uploadNewImage($path, $description, $category){
+    //get right category id
+    $id = $this->getCategoryId($category);
       $add = $this->conn->prepare("INSERT INTO  ". self::$imgTable ."(
   			image_url , image_name, image_category)
   				VALUES (?, ?, ?)");
   		if ($add === FALSE) {
-  			throw new \Exception($this->conn->error);
+  			throw new ProblemWithDatabaseException();
+        return false;//körs ej pga exeption
   		}
   		$add->bind_param('ssi', $path, $description, $id);
   		$add->execute();
+      return true;
   }
 
   public function tryToLoggIn($username, $password){
