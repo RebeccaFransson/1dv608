@@ -2,12 +2,18 @@
 namespace controller;
 class LoginController{
 
-  public function __construct($loginModel, $loginView){
+  public function __construct(\model\LoginModel $loginModel, \view\LoginView $loginView){
     $this->loginModel = $loginModel;
     $this->loginView = $loginView;
     $this->startLogin();
   }
-
+/*
+Väntar på att användaren skall klicka på knappen
+Validerar inputfälten
+Gick valideringen bra så provar vi att logga in
+Om inloggningen gick bra så ber vi vyn meddela användaren
+Fångar också exeptions i modellen här och ber vyn skriva ut felmeddelandet till användaren
+*/
   private function startLogin(){
     //kollar om vi fått en post och om vi inte redan är inloggade
     if($this->loginView->checkLoginButton()){
@@ -17,12 +23,10 @@ class LoginController{
           $loggedIn = $this->loginModel->tryToLoggIn($userCredentials);
           if($loggedIn){
             $this->loginView->successLogin();
-            //header('Location: http://188.166.116.158/1dv608/Project-Gallery/?changeGallery');
           }
         }catch(\model\NotCorrectCredentialsException $e){
           $this->loginView->notCorrectCredentials();
         }
-
       }
     }
   }

@@ -26,7 +26,11 @@ class MasterController{
     $this->Navigation = new \view\NavigationView();
     $this->DB = new \model\GalleryDAL();
   }
-
+/*
+MasterControllern kollar URLen för att se vilken sida användaren försöker nå.
+Och skcikar sedan användaren dit och sätter igång sidans kontroller.
+Kontrollern håller sedan koll på om användaren gör något på den nya sidan.
+*/
   public function runProgram(){
     $sessions = new \view\Sessions();
     $show = '';

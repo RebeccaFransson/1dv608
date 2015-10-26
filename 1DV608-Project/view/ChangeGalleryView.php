@@ -19,7 +19,9 @@ class ChangeGalleryView{
   public function __construct($db){
     $this->db = $db;
   }
-
+/*
+Lägger till en bit text om en bild har laddas upp
+*/
   public function changeGalleryResponse(){
     $response = '';
     if($this->imgUploadSuccsess){
@@ -32,10 +34,10 @@ class ChangeGalleryView{
 
   public function changeGalleryHTML(){
     return '
+    <p class="errorMessage">' . $this->message . '</p>
     <form enctype="multipart/form-data" method="post" action="" >
       <fieldset>
         <legend>Upload new picture</legend> <br>
-        <p class="errorMessage">' . $this->message . '</p>
         <p><input type="file" name="' . self::$img . '"></p>
         <p><label>Write a short description</label><br>
         <input type="text" name="'. self::$description .'" /></p>
@@ -44,11 +46,11 @@ class ChangeGalleryView{
         '. $this->getAllCategories() .'
         </select></p>
         <p><input type="submit" name="' . self::$sendImg . '" value="Upload picture" /></p>
-        <p><a href="?newCategory"/>Add new category</a></p>
+        <p><a href="?newCategory"/>Remove/add categorys</a></p>
+        <a class="back" href="?login">Back</a>
       </fieldset>
     </form>
     ';
-    //<input type="submit" href="?newCategory" name="" value="Write a new category" />
   }
 
   public function getAllCategories(){
@@ -63,7 +65,7 @@ class ChangeGalleryView{
   }
 
   public function uploadImageToServer(){
-    $maxbit = 33554432; //4megabyte
+    $maxbit = 16777216; //2megabyte
     $okFileFormat = array(
         'image/jpeg',
         'image/jpg',
@@ -75,17 +77,17 @@ class ChangeGalleryView{
     try{
       if(!isset($_FILES[self::$img]['error']) || is_array($_FILES[self::$img]['error'])){
         throw new InvalidParametersException();
-      }
-      else if ($_FILES[self::$img]['size'] > $maxbit) {
+      }else if ($_FILES[self::$img]['size'] > $maxbit) {
         throw new ToBigFileException();
-      }
-      else if(!in_array($_FILES[self::$img]['type'], $okFileFormat) && !empty($_FILES[self::$img]["type"])){
+      }else if(!in_array($_FILES[self::$img]['type'], $okFileFormat) && !empty($_FILES[self::$img]["type"])){
         throw new InvalidFormatException();
       }
+      //inga errors lägg till bilden på servern
       else if($_FILES[self::$img]['error'] == 0){
         move_uploaded_file($_FILES[self::$img]['tmp_name'], $imgLocation);
         return true;
       }
+      //okända fel
       else{
         $this->message =  "Oväntat fel på servern, vi beklagar! :(";
       }

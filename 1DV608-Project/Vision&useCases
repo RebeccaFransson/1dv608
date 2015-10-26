@@ -1,21 +1,16 @@
-<<<<<<< HEAD
-ag har valt att skapa ett galleri till en fotograf, Mi Ritzen.
-Mi har en hemsk hemsida där inget annat än HTML används på en väldigt lågnivå.
-Hennes hemsida har hon gjort för att locka kunder att använda henne som fotograf till olika tillställningar.
-=======
+VISION
+
 Jag har valt att skapa ett galleri till en fotograf, Mi Ritzen.
 Mi har en hemsk hemsida där inget annat än HTML används på en väldigt lågnivå.
 Hennes hemsida har hon gjort för att locka kunder att använda henne som fotograf till olika tillställningar.
->>>>>>> origin/master
+
 Men hennes hemsida är svår navigerad och det är i princip ingen användarvänlighet för hennes användare eller henne själv.
 För att lägga till en bild på hennes hemsida måste hon ändra HTML-koden, vilket inte alls är användarvänligt för henne som inte är insatt i webbutveckling.
 
 Jag vill skapa ett galleri som först och främst är enkelt för henne och hennes kunder att använda.
-<<<<<<< HEAD
-Det ska vara enkelt för Mi att logga in och lägga till fler bilder i sitt galleri.
-=======
-Det ska vara enkelt för Mi att logga in och lägga till fler bilder i sitt galleri.
->>>>>>> origin/master
+
+Det ska vara enkelt för Mi att logga in och lägga till bilder i sitt galleri.
+
 Hon skall också ha en möjlighet att ta bort bilder från galleriet.
 
 Bilderna skall vara kategoriserade i olika mappar så det är lätt att navigera sig till tex Natur-fotografier.
@@ -25,7 +20,7 @@ Detta projekt är också enkelt att fortsätta att utvecka på om Mi skulle vilj
 
 
 
-Use Cases
+USE CASES
 
 UC1 Admin vill logga in
 Huvud senario
@@ -79,9 +74,34 @@ UC4 En användare vill bläddra runt bland bilderna
 
 --Skrivet av Rebecca Fransson 2015-10-07
 
-
+KOMMENTERER/FUNDERINGAR
 Då min applikation var något större än vad jag räknat med har jag istället valt att
 fokusera på inloggningen och att spara bilder.
 Appilkationens fokus ligger också mycket på valideringen.
 Bilderna sparas på servern och informationen om bilden sparas på en databas.
-Om Admin vill ta bort bidler får den gå in på servern och ta bort dem därifrån Men en borttagnings-function är påbörjad dock bort prioriterad
+En borttagnings-function är påbörjad dock bort prioriterad.
+Valde att priorietera bort att lägga till en kategori och istället göra en kontaktsida.
+--Skrivet av Rebecca Fransson 2015-10-20
+
+
+
+SLUT RESULTAT
+Alla "Use Cases" är uppfyllda! Det trodde jag faktiskt inte att jag skulle hinna med.
+Efter halva vägen in i projektet valde jag att ta bort "lägga till ny kategori" då jag kände
+att det kunde bli för mycket(för att sql-satserna hade strulat så mycket). Istället valde jag att
+snabbt göra en liten kontakt sida och fokusera på valederingen. Dock fungerar inte denna pga av att mail()
+kräver att min server är en mail-server och detta lyckades jag inte hinna att fixa.
+Då bestämde jag mig för att fortsätta och eftersom att kravet "kunna logga in" gick så fort hann jag också göra
+"skapa ny kategori".
+Det finns många fler funktionalliteter som jag hade velat skriva, så som tillexempel "ta bort en bild",
+"lägga till en ny admin" och "ta bort en kategori". Men eftersom tiden för detta projekt bara var ca 2 veckor
+så fanns inte den tiden och detta blev bort prioriterat.
+Men jag tycker att jag har hunnit väldigt mycket på två veckor och jag är nöjd med mitt arbete.
+
+
+
+
+
+
+
+--Skrivet av Rebecca Fransson 2015-10-26

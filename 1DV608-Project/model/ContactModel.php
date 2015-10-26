@@ -6,7 +6,12 @@ class ContactModel{
   private $emailFrom;
   private $subject = 'A message from websurfer on your site';
   private $headers;
-
+/*
+FUNGERAR EJ!!!
+Lyckades inte hinna fixa min server till en mail-server
+därför fungerar inte det att skciak ett mail.
+Men all validering innan denna funktionen fungerar perfekt!
+*/
   public function sendNewEmail($emailObj){
     $this->emailFrom = $emailObj->getEmailAdress();
     $this->headers = 'From: '.$this->emailFrom.' Name: '.$emailObj->getFirstname().$emailObj->getLastname();

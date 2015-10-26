@@ -14,7 +14,10 @@ class EmailObject{
   private $clientMessage;
   private $email_exp = '/^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/';
   private $name_exp = '/^[a-zA-Z ]*$/';
-
+/*
+All valdering till inputfälten för att skiva ett email är här
+Exeptions-namnen förklarar felmeddelanden som komemr skrivas ut i vyn
+*/
   public function __construct($firstName, $lastName, $emailAdress, $clientMessage){
     if(is_string($firstName) == false || strlen($firstName) == 0){
       throw new FirstnameMissingException();
@@ -35,9 +38,8 @@ class EmailObject{
       $this->emailAdress = $emailAdress;
       $this->clientMessage = $clientMessage;
     }
-
   }
-
+/*GETTERS*/
   public function getFirstname(){
     return $this->firstName;
   }

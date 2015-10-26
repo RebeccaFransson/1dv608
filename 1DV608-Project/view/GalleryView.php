@@ -6,7 +6,10 @@ class GalleryView{
   public function __construct($db){
     $this->db = $db;
   }
-
+/*
+Beroende på om man redan valt en kategori eller inte visas kategorierna eller alla bilder inom en vald kategori
+Här kommer sedan också vara mer kod om vad som skall hända om man klickar på en bild och vill förstora den
+*/
   public function galleryHTML(){
     $wholeGallery = '';
     if(isset($_GET[self::$category])){
@@ -17,6 +20,7 @@ class GalleryView{
     return $wholeGallery;
   }
 
+//skriver ut kategorierna
   public function galleryCategorys(){
     $AllCategorys = '';
     try{
@@ -26,25 +30,27 @@ class GalleryView{
         $AllCategorys .= $key.'">';
         $AllCategorys .= $key.'</a></div>';
       }
-    }catch(NoCategorysException $e){
+    }catch(\model\NoCategorysException $e){
         $AllCategorys = '<p class="errorMessage">There is no categorys in the database!</p>';
     }
     return $AllCategorys;
   }
 
+//skriver ut bilderna för en vald katergori
   public function galleyByCategory($category){
-    $imagesArray = $this->db->getImagesByCategory($category);
     $wholeGallery = '';
-    foreach ($imagesArray as $key) {
-      $newImgTag = '<div class="img"><img src="';
-      $newImgTag .= $key->getImageUrl().'" alt="';
-      $newImgTag .= $key->getImageName().'" style="width:100%;"></div>';
-      $wholeGallery .= $newImgTag;
+    try{
+      $imagesArray = $this->db->getImagesByCategory($category);
+      foreach ($imagesArray as $key) {
+        $newImgTag = '<div class="img"><img src="';
+        $newImgTag .= $key->getImageUrl().'" alt="';
+        $newImgTag .= $key->getImageName().'" style="width:100%;"></div>';
+        $wholeGallery .= $newImgTag;
+      }
+    }catch(\model\NoImagesByCategoryException $e){
+      $wholeGallery = '<p class="errorMessage">There is no images in the '.$category.'-category!</p><br>
+      <a href="?">Back</a>';
     }
     return $wholeGallery;
   }
-
-
-
-
 }

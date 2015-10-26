@@ -7,17 +7,20 @@ class NewImage{
   private $description;
   private $category;
 
+/*
+Skapar ett nybild-objekt som valideras
+*/
   public function __construct($path, $description, $category){
-    $this->path = 'http://188.166.116.158/1dv608/Project-Gallery/imageUploads/' . $path;
-    $this->description = $description;
-    $this->category = $category;
-
     if($this->path === NULL){
       throw new PathMissingException();
     }
     if(is_string($this->description) === false || strlen($this->description) == 0){
       throw new DescriptionMissingException();
     }
+      $this->path = 'http://188.166.116.158/1dv608/Project-Gallery/imageUploads/' . $path;
+      $this->description = $description;
+      $this->category = $category;
+
   }
 
   public function getImagePath(){

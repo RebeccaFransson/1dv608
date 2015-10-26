@@ -4,7 +4,9 @@ class Image{
   private $id;
   private $name;
   private $url;
-
+/*
+Skapar ett bild-objekt
+*/
   public function __construct($id, $name, $url){
     $this->id = $id;
     $this->name = $name;

@@ -15,7 +15,7 @@ class LoginView{
   public function __construct($sessions){
     $this->sessions = $sessions;
   }
-
+//BEroende på om användaren är inloggad eller inte skriv anting inlogg-sidan ut eller en lista med admin-alternativ
   public function loginResponse(){
     $response = '';
     if($this->sessions->checkSessionLoggedIn()){
@@ -30,10 +30,10 @@ class LoginView{
 
   public function loginHTML(){
     return '
+    <p class="errorMessage">' . $this->message . '</p>
     <form method="post" >
       <fieldset>
         <legend>Login - enter Username and password</legend>
-        <p class="errorMessage">' . $this->message . '</p>
         <p><input type="text" placeholder="Username" id="' . self::$name . '" name="' . self::$name . '" value="' . $this->savedUsername . '" /></p>
         <p><input type="password" placeholder="Password" id="' . self::$password . '" name="' . self::$password . '" /></p>
         <p><input type="submit" name="' . self::$login . '" value="login" /></p>
@@ -62,7 +62,7 @@ class LoginView{
   public function notCorrectCredentials(){
     $this->message = 'Not correct credentials!';
   }
-  public function successLogin(){
+  public function successLogin(){//kontrollern pratar med denna vyn som sedan säger till sessions classen
     $this->sessions->setSessionLoggedIn();
   }
   //GETTERS

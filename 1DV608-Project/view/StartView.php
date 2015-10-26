@@ -23,7 +23,6 @@ class StartView{
             <div id="header"></div>
             <div id="navigation">'. $this->renderNavigation() .'</div>
 
-
             <div id="container">
                 ' . $show . '
             </div>
@@ -42,8 +41,8 @@ class StartView{
   }
   private function renderNavigation(){
     return '<ul><li><a href="'. self::$infoURL .'">Mi Ritzen</a></li>
-    <li><a href="?">Kategorier</a></li>
-    <li><a href="'.self::$contactURL.'">Kontakt</a></li></ul>';
+    <li><a href="?">Categories</a></li>
+    <li><a href="'.self::$contactURL.'">Contact</a></li></ul>';
   }
 
 }

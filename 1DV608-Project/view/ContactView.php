@@ -18,6 +18,9 @@ class ContactView{
   private $validationOK = false;
   private $emailSent = false;
 
+  /*
+  Lägger till en bit text om ett mail har skickats
+  */
 public function contactRender(){
   $response = '';
   if($this->emailSent){
@@ -29,11 +32,11 @@ public function contactRender(){
 
   private function contactHTML(){
     return '
+    <p class="errorMessage">' . $this->errorMessage . '</p>
       <form method="post" >
         <fieldset>
           <legend>Contact - Write a email to Mi Ritzen</legend>
           <div class="FirstInputs">
-          <p class="errorMessage">' . $this->errorMessage . '</p>
           <p><input type="text" placeholder="Firstname" name="' . self::$firstName . '" value="'. $this->firstnameValue .'" /></p>
           <p><input type="text" placeholder="Lastname" name="' . self::$lastName . '" value="'. $this->lastnameValue .'" /></p>
           <p><input type="text" placeholder="Email adress" name="' . self::$emailAdress . '" value="'. $this->emailAdressValue .'" /></p>
@@ -71,20 +74,19 @@ public function contactRender(){
     }
   }
 
-private function setFields(){
-  $this->firstnameValue = $_POST[self::$firstName];
-  $this->lastnameValue = $_POST[self::$lastName];
-  $this->emailAdressValue = $_POST[self::$emailAdress];
-  $this->clientMessageValue = $_POST[self::$clientMessage];
-}
-public function setEmailSent(){
-  $this->emailSent = true;
-}
+  //SETTERS
+  private function setFields(){
+    $this->firstnameValue = $_POST[self::$firstName];
+    $this->lastnameValue = $_POST[self::$lastName];
+    $this->emailAdressValue = $_POST[self::$emailAdress];
+    $this->clientMessageValue = $_POST[self::$clientMessage];
+  }
+  public function setEmailSent(){
+    $this->emailSent = true;
+  }
 
-//SETTERS
-public function getValidationOK(){
-  return $this->validationOK;
-}
-
-
+  //GETTERS
+  public function getValidationOK(){
+    return $this->validationOK;
+  }
 }
