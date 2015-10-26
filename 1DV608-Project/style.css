@@ -138,7 +138,16 @@ body {
   padding: 0 30px 0 30px;
   text-align: center;
 }
-/*CONTACT PAGE*/
+/*NEW CATEGORY*/
+#container .form1{
+  width: 35%;
+  padding:0;
+}
+#container .form1{
+  width: 35%;
+  padding:0;
+  float:left;
+}
 
 /*ALL FORMS*/
 #container fieldset{

@@ -1,5 +1,4 @@
-VISION
-
+---VISION---
 Jag har valt att skapa ett galleri till en fotograf, Mi Ritzen.
 Mi har en hemsk hemsida där inget annat än HTML används på en väldigt lågnivå.
 Hennes hemsida har hon gjort för att locka kunder att använda henne som fotograf till olika tillställningar.
@@ -20,8 +19,7 @@ Detta projekt är också enkelt att fortsätta att utvecka på om Mi skulle vilj
 
 
 
-USE CASES
-
+---USE CASES---
 UC1 Admin vill logga in
 Huvud senario
 1. Börjar med att admin klickar på länken "Admin login"
@@ -71,10 +69,12 @@ UC4 En användare vill bläddra runt bland bilderna
 1. Börjar med att en användare går in på sidan
 2. Användaren får möjlighet att välja en kategori
 3. Systemet presenterar alla bilderna i en katergori
-
 --Skrivet av Rebecca Fransson 2015-10-07
 
-KOMMENTERER/FUNDERINGAR
+
+
+
+---KOMMENTERER/FUNDERINGAR---
 Då min applikation var något större än vad jag räknat med har jag istället valt att
 fokusera på inloggningen och att spara bilder.
 Appilkationens fokus ligger också mycket på valideringen.
@@ -85,7 +85,7 @@ Valde att priorietera bort att lägga till en kategori och istället göra en ko
 
 
 
-SLUT RESULTAT
+---SLUT RESULTAT---
 Alla "Use Cases" är uppfyllda! Det trodde jag faktiskt inte att jag skulle hinna med.
 Efter halva vägen in i projektet valde jag att ta bort "lägga till ny kategori" då jag kände
 att det kunde bli för mycket(för att sql-satserna hade strulat så mycket). Istället valde jag att
@@ -97,11 +97,4 @@ Det finns många fler funktionalliteter som jag hade velat skriva, så som tille
 "lägga till en ny admin" och "ta bort en kategori". Men eftersom tiden för detta projekt bara var ca 2 veckor
 så fanns inte den tiden och detta blev bort prioriterat.
 Men jag tycker att jag har hunnit väldigt mycket på två veckor och jag är nöjd med mitt arbete.
-
-
-
-
-
-
-
 --Skrivet av Rebecca Fransson 2015-10-26

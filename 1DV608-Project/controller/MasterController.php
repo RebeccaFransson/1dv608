@@ -49,7 +49,7 @@ Kontrollern håller sedan koll på om användaren gör något på den nya sidan.
       $show = $changeGalleryView->changeGalleryResponse();
     }
     else if($this->Navigation->checkNewCategory() && $sessions->checkSessionLoggedIn()) {
-      $newCategoryView = new \view\NewCategoryView();
+      $newCategoryView = new \view\NewCategoryView($this->DB);
       $newCategoryController = new \controller\NewCategoryController($this->DB, $newCategoryView);
       $newCategoryController->startNewCategory();
       $show = $newCategoryView->newCategoryResponse();
