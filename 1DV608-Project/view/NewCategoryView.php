@@ -13,6 +13,7 @@ class NewCategoryView{
   private $uploadSuccess = false;
   private $categoryInputsOK = false;
   private $message = '';
+  private $db;
 
   public function __construct($DB){
     $this->db = $DB;

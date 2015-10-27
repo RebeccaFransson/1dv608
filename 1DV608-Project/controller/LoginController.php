@@ -2,6 +2,9 @@
 namespace controller;
 class LoginController{
 
+private $loginModel;
+private $loginView;
+
   public function __construct(\model\LoginModel $loginModel, \view\LoginView $loginView){
     $this->loginModel = $loginModel;
     $this->loginView = $loginView;

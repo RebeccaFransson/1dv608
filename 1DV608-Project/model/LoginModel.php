@@ -1,6 +1,8 @@
 <?php
 namespace model;
 class LoginModel{
+  private $DB;
+  
   public function __construct($DB){
     $this->DB = $DB;
   }

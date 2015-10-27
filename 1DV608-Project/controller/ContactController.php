@@ -2,6 +2,9 @@
 namespace controller;
 class ContactController{
 
+private $contactModel;
+private $contactView;
+
   public function __construct(\model\ContactModel $contactModel, \view\ContactView $contactView){
     $this->contactModel = $contactModel;
     $this->contactView = $contactView;

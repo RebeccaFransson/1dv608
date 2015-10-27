@@ -9,6 +9,7 @@ require_once('view/ChangeGalleryView.php');
 require_once('view/ContactView.php');
 require_once('view/InformationPageView.php');
 require_once('view/NewCategoryView.php');
+require_once('view/DeletePicturesView.php');
 require_once('view/Sessions.php');
 //controller
 require_once('controller/LoginController.php');
@@ -22,6 +23,9 @@ require_once('model/GalleryDAL.php');
 require_once('model/ContactModel.php');
 
 class MasterController{
+  private $Navigation;
+  private $DB;
+  
   public function __construct(){
     $this->Navigation = new \view\NavigationView();
     $this->DB = new \model\GalleryDAL();

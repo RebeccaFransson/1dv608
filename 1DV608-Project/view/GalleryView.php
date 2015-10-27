@@ -3,6 +3,8 @@ namespace view;
 class GalleryView{
 
   private static $category = 'category';
+  private $db;
+  
   public function __construct($db){
     $this->db = $db;
   }

@@ -11,6 +11,7 @@ class LoginView{
   private $message = '';
   private $savedUsername = '';
   private $userCredOK = false;
+  private $sessions;
 
   public function __construct($sessions){
     $this->sessions = $sessions;

@@ -7,6 +7,7 @@ class NavigationView{
   private static $infoPageURL = 'information';
   private static $logoutURL = 'logout';
   private static $newCategoryURL = 'newCategory';
+  private static $deletePicturesURL = 'deletePictures';
 
   public function checkLogin(){
     return isset($_GET[self::$loginURL]);
@@ -25,6 +26,9 @@ class NavigationView{
   }
   public function checkNewCategory(){
     return isset($_GET[self::$newCategoryURL]);
+  }
+  public function checkDeletePictures(){
+    return isset($_GET[self::$deletePicturesURL]);
   }
 
 }

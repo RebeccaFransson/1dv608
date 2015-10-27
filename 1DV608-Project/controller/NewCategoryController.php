@@ -2,6 +2,9 @@
 namespace controller;
 class NewCategoryController{
 
+private $DB;
+private $newCategoryView;
+
   public function __construct(\model\GalleryDAL $DB, \view\NewCategoryView $newCategoryView){
     $this->DB = $DB;
     $this->newCategoryView = $newCategoryView;

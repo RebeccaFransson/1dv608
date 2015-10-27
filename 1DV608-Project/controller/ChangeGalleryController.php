@@ -2,6 +2,9 @@
 namespace controller;
 class ChangeGalleryController{
 
+private $DB;
+private $changeGalleryView;
+
   public function __construct(\model\GalleryDAL $DB, \view\ChangeGalleryView $changeGalleryView){
     $this->DB = $DB;
     $this->changeGalleryView = $changeGalleryView;

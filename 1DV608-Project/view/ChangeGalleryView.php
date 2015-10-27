@@ -15,6 +15,7 @@ class ChangeGalleryView{
   private $message = '';
   private $IMGValidation = false;
   private $imgUploadSuccsess = false;
+  private $db;
 
   public function __construct($db){
     $this->db = $db;
@@ -75,7 +76,7 @@ Lägger till en bit text om en bild har laddas upp
 
     try{
       if(!isset($_FILES[self::$img]['error']) || is_array($_FILES[self::$img]['error'])){
-        // Undefined | Flera Filer 
+        // Undefined | Flera Filer
         throw new InvalidParametersException();
       }else if ($_FILES[self::$img]['error'] == 1) {
         //upload_max_filesize i php.ini = 2M

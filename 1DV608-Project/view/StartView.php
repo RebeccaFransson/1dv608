@@ -4,6 +4,7 @@ class StartView{
   private static $loginURL = '?login';
   private static $contactURL = '?contact';
   private static $infoURL = '?information';
+  private $IsLoggedIn;
 
   public function __construct($IsLoggedIn){
     $this->IsLoggedIn = $IsLoggedIn;
