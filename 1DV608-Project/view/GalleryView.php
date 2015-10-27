@@ -4,7 +4,7 @@ class GalleryView{
 
   private static $category = 'category';
   private $db;
-  
+
   public function __construct($db){
     $this->db = $db;
   }
@@ -40,7 +40,7 @@ Här kommer sedan också vara mer kod om vad som skall hända om man klickar på
 
 //skriver ut bilderna för en vald katergori
   public function galleyByCategory($category){
-    $wholeGallery = '';
+    $wholeGallery = '<div class="imgContainer">';
     try{
       $imagesArray = $this->db->getImagesByCategory($category);
       foreach ($imagesArray as $key) {
@@ -53,6 +53,6 @@ Här kommer sedan också vara mer kod om vad som skall hända om man klickar på
       $wholeGallery = '<p class="errorMessage">There is no images in the '.$category.'-category!</p><br>
       <a href="?">Back</a>';
     }
-    return $wholeGallery;
+    return $wholeGallery.'</div>';
   }
 }

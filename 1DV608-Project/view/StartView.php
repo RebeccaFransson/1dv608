@@ -19,11 +19,10 @@ class StartView{
           <title>Mi Ritzen</title>
         </head>
         <body>
+        <div id="loginLink">'. $this->renderLink() .'</div>
           <div id="bodyAll">
-          <div id="loginLink">'. $this->renderLink() .'</div>
-            <div id="header"></div>
             <div id="navigation">'. $this->renderNavigation() .'</div>
-
+            <div id="header"></div>
             <div id="container">
                 ' . $show . '
             </div>

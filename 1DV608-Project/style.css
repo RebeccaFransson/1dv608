@@ -1,64 +1,56 @@
 body {
     background-color: #ffffff;
+
+    font-family: monospace;
 }
 #bodyAll{
-  box-shadow: #D6D6D6 3px 2px 3px;
-  background-color: rgba(143, 216, 141, 0.35);
-  width:700px;
+  width:900px;
   margin: auto;
-  border: #D6D6D6 solid 3px;
 }
-#loginlink {
+#loginlink{
   width: 100%;
-  background-color: rgba(132, 197, 115, 0.35);
+  background-color: red;
+  height: 20px;
+  float: right;
 }
 #loginlink a{
   padding-left: 20px;
+  display: block;
+  color: #757575;
+  text-decoration: none;
 }
 #header{
-  background-image: url(http://188.166.116.158/1dv608/Project-Gallery/imageUploads/453768-cats-cute.jpg);
+  background-image: url(https://scontent.xx.fbcdn.net/hphotos-xfa1/v/t1.0-9/378323_4366091471153_1267024774_n.jpg?oh=d36ba982da702f4c47ed8c429e9835c1&oe=56C96066);
   background-size: cover;
-    width: 100%;
-    height: 320px;
+  background-position: 0px 284px;
+  width: 100%;
+  height: 149px;
+  margin-top: 24px;
 }
 #navigation{
-  background-color: rgba(143, 216, 141, 0.77);
   font-size: 25px;
-  font-family: monospace;
-  position: relative;
-  bottom: 65px;
   width: 100%;
   height: 40px;
-  text-shadow: #8E8E8E 1px 1.5px 2px;
-}
-#navigation ul li:hover > ul{
-  display:block;
+  color: black;
 }
 #navigation ul li{
   float:left;
   list-style: none;
   height: 40px;
 }
-#navigation ul li:hover{
-  background-color: rgba(143, 216, 141, 0.77);
-  color: #black;
-  text-shadow: #525252 0px 0px 2px;
+#navigation ul li a:hover{
+  color: #757575;
 }
 #navigation ul li a {
 		display: block;
-    padding: 5px 45px 0 45px;
-		color: #757575;
+    padding: 5px 113px 10px 45px;
     text-decoration: none;
 }
-#loginLink{
-  float: right;
-}
 #container{
-  width: 100%;
-  max-height: 360px;
-  position: relative;
-  bottom: 40px;
-  overflow-x: auto;
+  width: 95%;
+  margin: auto;
+  padding: 20px;
+  background-color: #FFFAF4;
 }
 .errorMessage{
   text-align: center;
@@ -76,13 +68,10 @@ body {
 }
 
 /*GALLERY*/
-
 .category_name {
-  background-color: #CDEACC;
   color: #757575;
   font-size: 2.5em;
-  padding: 20px 0 20px 0;
-  border-bottom: aliceblue solid;
+  padding: 10px 0 10px 0;
   font-family: monospace;
   text-align:center;
 }
@@ -90,13 +79,15 @@ body {
   text-decoration: none;
   text-shadow: rgba(0, 0, 0, 0.37) 1px 1px 2px;
 }
-.category_name:hover{
-  text-shadow: rgba(0, 0, 0, 0.37) 0.5px 0.5px 1px;
+.category_name a:hover{
   color: black;
-  background-color: #BDE8BB;
+}
+.imgContainer{
+  min-height:  200px;
+  width:100%;
 }
 .img{
-  width: 25%;
+  width: 27%;
   margin: 27px;
   float: left;
   box-shadow: rgba(0, 0, 0, 0.33) 2px 3px 5px;
@@ -117,20 +108,18 @@ body {
   text-decoration:  none;
 }
 .links{
-    background-color: #CDEACC;
     text-align: center;
 }
 .links a{
   color: #757575;
   font-size: 2.5em;
-  border-bottom: aliceblue solid;
   font-family: monospace;
   text-align:center;
+  margin-top:6px;
 }
 .links a:hover{
   text-shadow: rgba(0, 0, 0, 0.37) 0.5px 0.5px 1px;
   color: black;
-  background-color: #BDE8BB;
 }
 /*CHANGE-GALLERY*/
 .back{
@@ -153,6 +142,7 @@ body {
 #container fieldset{
     display: block;
     padding: 0 143px;
+    border: none;
 }
 #container input:hover{
   background-color: #EFEFEF;
@@ -164,7 +154,7 @@ body {
 #container fieldset legend{
   text-align: center;
   padding: 0.2em 0.5em;
-  font-size:90%;
+  font-size: 1.5em;
 }
 #container fieldset p{
   text-align: center;

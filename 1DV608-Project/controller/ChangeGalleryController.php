@@ -8,6 +8,8 @@ private $changeGalleryView;
   public function __construct(\model\GalleryDAL $DB, \view\ChangeGalleryView $changeGalleryView){
     $this->DB = $DB;
     $this->changeGalleryView = $changeGalleryView;
+
+    $this->startUpload();
   }
 /*
 Väntar på att användaren skall klicka på skicka-knappen.
@@ -17,7 +19,7 @@ Kollar sedan om den sparade bilden redan finns i databasen
 Om inte så laddar vi upp den.
 Säger till vyn att allt gick bra så ett meddelande kan skrivas ut till användaren
 */
-  public function startUpload(){
+  private function startUpload(){
     if($this->changeGalleryView->checkUpload()){
       $newImage = $this->changeGalleryView->checkImageInputs();
       if($this->changeGalleryView->getIMGValidation()){

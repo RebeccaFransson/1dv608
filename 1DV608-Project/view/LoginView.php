@@ -22,7 +22,8 @@ class LoginView{
     if($this->sessions->checkSessionLoggedIn()){
       $response = '<p class="links"><a href="?changeGallery">Upload images</a><br>
       <a href="?">Delete images(not done)</a><br>
-      <a href="?">Add new admin(not done)</a><br></p>';
+      <a href="?">Add new admin(not done)</a><br>
+      <a href="?newCategory"/>Remove/add categorys</a></p>';
     }else{
       $response = $this->LoginHTML();
     }

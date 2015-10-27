@@ -40,7 +40,7 @@ class NewCategoryView{
         </fieldset>
       </form>
       </div>
-      <div class="form2"
+      <div class="form2">
         <form method="post">
           <fieldset>
           <p class="errorMessage">(NOT DONE!)</p>
