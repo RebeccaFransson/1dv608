@@ -16,7 +16,12 @@ Men all validering innan denna funktionen fungerar perfekt!
     $this->emailFrom = $emailObj->getEmailAdress();
     $this->headers = 'From: '.$this->emailFrom.' Name: '.$emailObj->getFirstname().$emailObj->getLastname();
 
-    mail($this->emailTo, $this->subject, $emailObj->getClientMessage());
+    if(@mail($this->emailTo, $this->subject, $emailObj->getClientMessage())){
+      //echo "message sent";
+    }else{
+      //echo "error!";
+      //print_r(error_get_last());
+    }
     //header('Location: http://188.166.116.158/1dv608/Project-Gallery/?contact');
     return true;
   }

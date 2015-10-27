@@ -101,6 +101,10 @@ body {
   float: left;
   box-shadow: rgba(0, 0, 0, 0.33) 2px 3px 5px;
 }
+.img img{
+  width: 100%;
+  display: block;
+}
 /*INFORMATION*/
 #information{
   padding: 0 20px;
