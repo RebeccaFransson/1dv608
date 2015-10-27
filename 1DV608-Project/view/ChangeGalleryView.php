@@ -47,7 +47,7 @@ Lägger till en bit text om en bild har laddas upp
         </select></p>
         <p><input type="submit" name="' . self::$sendImg . '" value="Upload picture" /></p>
         <p><a href="?newCategory"/>Remove/add categorys</a></p>
-        <a class="back" href="?login">Back</a>
+        <p><a class="back" href="?login">Back</a></p>
       </fieldset>
     </form>
     ';
@@ -65,7 +65,6 @@ Lägger till en bit text om en bild har laddas upp
   }
 
   public function uploadImageToServer(){
-    $maxbit = 16777216; //2megabyte
     $okFileFormat = array(
         'image/jpeg',
         'image/jpg',
@@ -76,8 +75,10 @@ Lägger till en bit text om en bild har laddas upp
 
     try{
       if(!isset($_FILES[self::$img]['error']) || is_array($_FILES[self::$img]['error'])){
+        // Undefined | Flera Filer 
         throw new InvalidParametersException();
-      }else if ($_FILES[self::$img]['size'] > $maxbit) {
+      }else if ($_FILES[self::$img]['error'] == 1) {
+        //upload_max_filesize i php.ini = 2M
         throw new ToBigFileException();
       }else if(!in_array($_FILES[self::$img]['type'], $okFileFormat) && !empty($_FILES[self::$img]["type"])){
         throw new InvalidFormatException();
@@ -94,7 +95,7 @@ Lägger till en bit text om en bild har laddas upp
     }catch(InvalidParametersException $e){
       $this->message = 'Invalid parameters.';
     }catch(ToBigFileException $e){
-      $this->message = 'Exceeded filesize limit.';
+      $this->message = 'Exceeded filesize limit on 2 megabyte.';
     }catch(InvalidFormatException $e){
       $this->message = 'Invalid file type. Only JPG, GIF and PNG types are accepted.';
     }

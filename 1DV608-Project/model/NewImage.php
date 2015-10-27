@@ -11,10 +11,10 @@ class NewImage{
 Skapar ett nybild-objekt som valideras
 */
   public function __construct($path, $description, $category){
-    if($this->path === NULL){
+    if(strlen($path) == 0){
       throw new PathMissingException();
     }
-    if(is_string($this->description) === false || strlen($this->description) == 0){
+    if(is_string($description) === false || strlen($description) == 0){
       throw new DescriptionMissingException();
     }
       $this->path = 'http://188.166.116.158/1dv608/Project-Gallery/imageUploads/' . $path;

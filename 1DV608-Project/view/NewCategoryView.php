@@ -1,5 +1,8 @@
 <?php
 namespace view;
+class DescriptionMissingException extends \Exception {};
+class ContainsInvalidCharException extends \Exception {};
+
 class NewCategoryView{
 
   private static $categoryName = 'NewCategory::Name';
@@ -8,6 +11,7 @@ class NewCategoryView{
   private static $categoryDelete = 'NewCategory::DeleteCategory';
 
   private $uploadSuccess = false;
+  private $categoryInputsOK = false;
   private $message = '';
 
   public function __construct($DB){
@@ -25,11 +29,11 @@ class NewCategoryView{
   }
   private function newCategoryHTML(){
     return '
-    <div class="form1";
-    <p class="errorMessage">' . $this->message . '</p>
+    <div class="form1">
       <form method="post">
         <fieldset>
-          <legend>Write a new category</legend> <br>
+          <legend>Write a new category</legend>
+          <p class="errorMessage">' . $this->message . '</p>
           <p><input type="text" placeholder="Name of category" name="'. self::$categoryName .'" /></p>
           <p><input type="submit" name="' . self::$categorySend . '" value="Insert category" /></p>
         </fieldset>
@@ -44,7 +48,7 @@ class NewCategoryView{
             '. $this->getAllCategories() .'
             </select></p>
             <p><input type="submit" name="' . self::$deleteCateg . '" value="Delete" /></p>
-            <a class="back" href="?changeGallery">Back</a>
+            <p><a class="back" href="?changeGallery">Back</a></p>
           </fieldset>
         </form>
       </div>
@@ -71,9 +75,10 @@ class NewCategoryView{
       if(is_string($_POST[self::$categoryName]) === false || strlen($_POST[self::$categoryName]) == 0){
         throw new DescriptionMissingException();
       }
-      if(strlen($_POST[self::$categoryName]) != strlen($_POST[self::$categoryName])){
+      if(strlen($_POST[self::$categoryName]) != strip_tags($_POST[self::$categoryName])){
         throw new ContainsInvalidCharException();
       }
+      $this->categoryInputsOK = true;
       return $_POST[self::$categoryName];
     }catch(DescriptionMissingException $e){
       $this->message = 'Write a description!';
@@ -82,6 +87,9 @@ class NewCategoryView{
     }
   }
 
+  public function getCategoryInputsOK(){
+    return $this->categoryInputsOK;
+  }
   //SETTERS
   public function setInsertSuccess(){
     $this->uploadSuccess = true;

@@ -1,0 +1,33 @@
+---LOGIN---
+Användaren loggar in utan användarn namn eller utan lösenord
+  Ett meddelande kommer upp om att användaren glömt skriva in ett användarnamn eller ett lösenord.
+
+Användaren loggar in med fel användarnamn eller lösenord
+  Ett meddelande kommer upp om att användaruppgifterna ej stämmer.
+
+Användaren loggar in med rätt användar uppgifter
+  Användaren tas vidare till "Admin-sida" där några alternativ visas.
+
+---UPPLADDNING---
+Användaren laddar upp en bild (1)utan att ha valt en bild eller (2)utan att ha skrivit en beskrivning
+  (1)Ett meddelande kommer upp och förklarar för användaren att den måste välja en bild.
+  (2)Ett meddelande kommer upp och förklarar för användaren att den måste skriva en beskrving.
+
+Användaren laddar uppp en fil som inte är JPG, GIF eller PNG -typ.
+  Ett meddelande kommer upp och förklarar för användaren vilka typer som går att använda.
+
+Använaren väljer en bild som är större än 2 megabyte
+  Ett meddelande till användaren kommer upp och förklarar att den valda bilden är för stor.
+
+Användaren laddar upp en bild som är i korrekt format och som inte överskrider 2megabyte
+  Ett meddeladne kommer upp om att uppladdningen lyckades och bilden finns att se i dess kategori.
+
+---NY KATEGORI---
+Användaren lägger till en ny kategori men utan ett namn på kategorin
+  Ett meddelande som förklarar för användaren att den måste skriva ett namn till kategorin visas.
+
+Användaren lägger till en kategori som innehåller någonform av HTML-tag
+  Ett meddelande visas som säger till användaren att namnet som den angav innerhåller ogiltiga tecken.
+
+Användaren lägger till en kategori med ett giltigt namn
+  Användaren blir meddelad om att uppladdningen gick bra och kan nu se bilden i "Kategorier"-sidan.

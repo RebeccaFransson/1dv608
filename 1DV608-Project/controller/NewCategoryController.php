@@ -15,13 +15,15 @@ Fångar exept i modellen och säger till vyn att skriva ut meddelandet till anv�
   public function startNewCategory(){
     if($this->newCategoryView->checkNewCategory()){
       $newCategory = $this->newCategoryView->checkCategoryInputs();
-      try{
-        $this->DB->insertNewCategory($newCategory);
-        $this->newCategoryView->setInsertSuccess();
-      }catch(\model\ExistingCategoryException $e){
-        $this->newCategoryView->setMessageCategoryExist();
-      }catch(\model\ProblemWithDatabaseException $e){
-        $this->newCategoryView->setMessageProblemWithDatabase();
+      if($this->newCategoryView->getCategoryInputsOK()){
+        try{
+          $this->DB->insertNewCategory($newCategory);
+          $this->newCategoryView->setInsertSuccess();
+        }catch(\model\ExistingCategoryException $e){
+          $this->newCategoryView->setMessageCategoryExist();
+        }catch(\model\ProblemWithDatabaseException $e){
+          $this->newCategoryView->setMessageProblemWithDatabase();
+        }
       }
     }
   }
