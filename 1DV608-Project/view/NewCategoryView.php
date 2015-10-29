@@ -76,7 +76,7 @@ class NewCategoryView{
       if(is_string($_POST[self::$categoryName]) === false || strlen($_POST[self::$categoryName]) == 0){
         throw new DescriptionMissingException();
       }
-      if(strlen($_POST[self::$categoryName]) != strip_tags($_POST[self::$categoryName])){
+      if(strlen($_POST[self::$categoryName]) != strip_tags(strlen($_POST[self::$categoryName]))){
         throw new ContainsInvalidCharException();
       }
       $this->categoryInputsOK = true;
